@@ -1,0 +1,8 @@
+*.exe
+obj/
+*.suo
+*.user
+*.swp
+*.o
+*.elf
+*.d
