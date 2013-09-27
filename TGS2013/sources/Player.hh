@@ -12,9 +12,9 @@ public:
     Player(int x, int y, int currentCubeID, int otherCubeID);
     ~Player();
     void	connection(unsigned int cube1ID, unsigned int side1, unsigned int cube2ID, unsigned int side2);
-    void	x() const { return _x; }
-    void	y() const { return _y; }
-    void	cubeID() const { return _currentCubeID; }
+    int		x() const { return _x; }
+    int		y() const { return _y; }
+    int		cubeID() const { return _currentCubeID; }
 
 private:
     int		_x;
