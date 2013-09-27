@@ -1,7 +1,8 @@
 #include "Player.hh"
+#include "Map.hh"
 
 Player::Player(int x, int y, int currentCubeId, int otherCubeID) : _x(x), _y(y),
-	_currentCubeID(currentCubeID, _otherCubeID(otherCubeID)
+	_currentCubeID(currentCubeID), _otherCubeID(otherCubeID)
 {
     clampPosition();
 }
@@ -32,9 +33,9 @@ bool	Player::clampPosition()
 	_x = 0;
 	change = true;
     }
-    else if (_x >= Map::size())
+    else if (_x >= Map::size)
     {
-	_x = Map::size() - 1;
+	_x = Map::size - 1;
 	change = true;
     }
     if (_y < 0)
@@ -42,9 +43,9 @@ bool	Player::clampPosition()
 	_y = 0;
 	change = true;
     }
-    else if (_y >= Map::size())
+    else if (_y >= Map::size)
     {
-	_y = Map::size() - 1;
+	_y = Map::size - 1;
 	change = true;
     }
     return (change);
