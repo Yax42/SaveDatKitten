@@ -1,7 +1,7 @@
 #include "Player.hh"
 #include "Map.hh"
 
-Player::Player(int x, int y, int currentCubeId, int otherCubeID) : _x(x), _y(y),
+Player::Player(int x, int y, int currentCubeID, int otherCubeID) : _x(x), _y(y),
 	_currentCubeID(currentCubeID), _otherCubeID(otherCubeID)
 {
     clampPosition();
@@ -13,9 +13,9 @@ void		Player::connection(unsigned int cube1ID, unsigned int side1, unsigned int 
 {
   int		side;
 
-  if (cube1ID == _currentCubeId && cube2ID == _otherCubeID)
+  if (cube1ID == _currentCubeID && cube2ID == _otherCubeID)
 	side = side1;
-  else if (cube2ID == _currentCubeId && cube1ID == _otherCubeID)
+  else if (cube2ID == _currentCubeID && cube1ID == _otherCubeID)
 	side = side2;
   else
 	return ;
@@ -54,11 +54,11 @@ bool	Player::clampPosition()
 void		Player::swapCubes()
 {
     int		tmp = _currentCubeID;
-    _currentCube = _otherCubeID;
+    _currentCubeID = _otherCubeID;
     _otherCubeID = tmp;
 }
 
-void		Player::move(const EDirection &dir)
+void		Player::move(int dir)
 {
     if (dir == EDirection::LEFT)
       _x--;

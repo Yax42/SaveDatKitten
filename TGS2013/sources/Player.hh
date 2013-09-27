@@ -1,12 +1,16 @@
 #pragma once
 
-enum EDirection
+namespace EDirection
 {
-	BOT,
-	RIGHT,
-	TOP,
-	LEFT
+	enum
+	{
+		BOT,
+		RIGHT,
+		TOP,
+		LEFT
+	};
 };
+
 
 class Player
 {
@@ -24,7 +28,7 @@ private:
     int		_currentCubeID;
     int		_otherCubeID;
 
-    void	move(const EDirection &dir);
+    void	move(int dir);
     void	swapCubes();
     bool	clampPosition();
 };
