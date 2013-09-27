@@ -1,6 +1,6 @@
 IconAssets = group{quality=10}
-Icon = image{"icon.png"}
+Icon = image{"resources/icon.png"}
 
 GameAssets = group{}
-Background = image{"sand.png", quality=10}
-Toto = image{"color.png", quality=10}
+Background = image{"resources/sand.png", quality=10}
+Toto = image{"resources/color.png", quality=10}
