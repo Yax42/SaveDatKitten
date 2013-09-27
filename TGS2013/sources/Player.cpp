@@ -1,6 +1,5 @@
 #include "Player.hh"
 
-Player::Player(int x, int y) :
 Player::Player(int x, int y, int currentCubeId, int otherCubeID) : _x(x), _y(y),
 	_currentCubeID(currentCubeID, _otherCubeID(otherCubeID)
 {
@@ -9,7 +8,7 @@ Player::Player(int x, int y, int currentCubeId, int otherCubeID) : _x(x), _y(y),
 
 Player::~Player(){}
 
-void		connection(unsigned int cube1ID, unsigned int side1, unsigned int cube2ID, unsigned int side2)
+void		Player::connection(unsigned int cube1ID, unsigned int side1, unsigned int cube2ID, unsigned int side2)
 {
   int		side;
 
@@ -68,6 +67,6 @@ void		Player::move(const EDirection &dir)
       _x++;
     if (dir == EDirection::BOT)
       _y++;
-    clampPosition();
-    swapCubes();
+    if (clampPosition() == false)
+	swapCubes();
 }
