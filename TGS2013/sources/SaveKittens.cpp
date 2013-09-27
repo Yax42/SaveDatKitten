@@ -4,6 +4,7 @@
 SaveKittens::SaveKittens() :
 	_player(16, 16, 0, 1)
 {
+	_map.printCase(_cubes[_player.cubeID()], _player.x(), _player.y());
 }
 
 void SaveKittens::init()
@@ -24,4 +25,5 @@ void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned s
 {
 	_player.connection(firstID, firstSide, secondID, secondSide);
 	_map.printCase(_cubes[_player.cubeID()], _player.x(), _player.y());
+	LOG("now in case %d %d\n", _player.x(), _player.y());
 }
