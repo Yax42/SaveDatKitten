@@ -1,12 +1,29 @@
 #include "Player.hh"
 
-Player::Player(int x, int y) : _x(x), _y(y)
+Player::Player(int x, int y) :
+Player::Player(int x, int y, int currentCubeId, int otherCubeID) : _x(x), _y(y),
+	_currentCubeID(currentCubeID, _otherCubeID(otherCubeID)
 {
     clampPosition();
 }
 
 Player::~Player(){}
 
+void		connection(unsigned int cube1ID, unsigned int side1, unsigned int cube2ID, unsigned int side2)
+{
+  int		side;
+
+  if (cube1ID == _currentCubeId && cube2ID == _otherCubeID)
+	side = side1;
+  else if (cube2ID == _currentCubeId && cube1ID == _otherCubeID)
+	side = side2;
+  else
+	return ;
+  //move(static_cast<EDirection>(side));
+  move(side);
+}
+
+/******PRIVATE******/
 bool	Player::clampPosition()
 {
     bool	change = false;
@@ -34,7 +51,14 @@ bool	Player::clampPosition()
     return (change);
 }
 
-void	Player::move(const EDirection &dir)
+void		Player::swapCubes()
+{
+    int		tmp = _currentCubeID;
+    _currentCube = _otherCubeID;
+    _otherCubeID = tmp;
+}
+
+void		Player::move(const EDirection &dir)
 {
     if (dir == EDirection::LEFT)
       _x--;
@@ -45,4 +69,5 @@ void	Player::move(const EDirection &dir)
     if (dir == EDirection::BOT)
       _y++;
     clampPosition();
+    swapCubes();
 }
