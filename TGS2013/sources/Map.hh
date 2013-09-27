@@ -2,6 +2,8 @@
 
 #include <sifteo.h>
 
+#define	MAP_SIZE	16
+
 class Map
 {
 public:
@@ -17,17 +19,16 @@ private:
 	struct	STile
 	{
 		int					x, y;
-		Sifteo::AssetImage	&img;
+		Sifteo::AssetImage	*img;
+		
+		STile();
 	};
 
 	struct	SCase
 	{
 		unsigned int	bg;
-		STile			*tiles[8];
-
-		SCase();
-		~SCase();
+		STile			tiles[8];
 	};
 
-	SCase		*_map;
+	SCase		_map[MAP_SIZE * MAP_SIZE];
 };

@@ -1,22 +1,14 @@
 #include "Map.hh"
 #include "assets.gen.h"
 
-const unsigned int	Map::size = 32;
+const unsigned int	Map::size = MAP_SIZE;
 
-Map::SCase::SCase()
+Map::STile::STile()
 {
-	for (int i = 0; i < 8; ++i)
-		tiles[i] = NULL;
+	img = NULL;
 }
 
-Map::SCase::~SCase()
-{
-	for (int i = 0; i < 8; ++i)
-		delete tiles[i];
-}
-
-Map::Map() :
-	_map(NULL)
+Map::Map()
 {
 	genMap();
 }
@@ -27,8 +19,6 @@ Map::~Map()
 
 void Map::genMap()
 {
-	delete _map;
-	_map = new SCase[size * size];
 	for (unsigned int i = 0; i < size * size; ++i)
 	{
 		_map[i].bg = i % 3;

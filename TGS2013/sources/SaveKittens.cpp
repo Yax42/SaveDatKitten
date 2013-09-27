@@ -10,13 +10,13 @@ void SaveKittens::init()
 {
 	for (int i = 0; i < gNumCubes; ++i)
 	{
-	       _cubes[i].initMode(BG0_SPR_BG1);
+	       _cubes[i].initMode(Sifteo::BG0_SPR_BG1);
 	       _cubes[i].attach(i);
 	}
-	Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
+	Sifteo::Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
 }
 
-void SaveKittens::update(TimeDelta dt)
+void SaveKittens::update(Sifteo::TimeDelta dt)
 {
 }
 
