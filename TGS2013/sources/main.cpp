@@ -7,8 +7,6 @@
 
 #include "SaveKittens.hh"
 
-Sifteo::Random gRandom;
-
 static Sifteo::AssetSlot MainSlot = Sifteo::AssetSlot::allocate()
     .bootstrap(GameAssets);
 

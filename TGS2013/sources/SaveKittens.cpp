@@ -4,6 +4,7 @@
 SaveKittens::SaveKittens() :
 	_player(16, 16, 0, 1)
 {
+	LOG("print: cube id = %d, pos = %d, %d\n", _player.cubeID(), _player.x(), _player.y());
 	_map.printCase(_cubes[_player.cubeID()], _player.x(), _player.y());
 }
 
