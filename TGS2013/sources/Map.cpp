@@ -10,7 +10,6 @@ Map::STile::STile()
 
 Map::Map()
 {
-	genMap();
 }
 
 Map::~Map()
@@ -55,7 +54,7 @@ Map::EZoneType Map::checkZone(SZone *zones, unsigned int x, unsigned int y) cons
 		unsigned int	dist = ABS((zones[i].posX - x) * (zones[i].posX - x)) +
 							   ABS((zones[i].posY - y) * (zones[i].posY - y));
 
-		if (nearest == ZONE_UNKNOWN || dist <= nearestDist)
+		if (nearest == ZONE_UNKNOWN || dist < nearestDist)
 		{
 			nearest = zones[i].type;
 			nearestDist = dist;

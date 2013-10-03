@@ -6,7 +6,8 @@
 
 #pragma once
 
-extern Sifteo::AssetGroup IconAssets;
-extern const Sifteo::AssetImage Icon;
 extern Sifteo::AssetGroup GameAssets;
 extern const Sifteo::PinnedAssetImage GroundTiles;
+extern const Sifteo::AssetImage BlackTile;
+extern Sifteo::AssetGroup IconAssets;
+extern const Sifteo::AssetImage Icon;

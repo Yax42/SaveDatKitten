@@ -3,7 +3,7 @@
 #include <sifteo.h>
 
 #define	MAP_SIZE	16
-#define	ZONE_NBR	10
+#define	ZONE_NBR	16
 
 #define ABS(x)	(((x) < 0) ? (-(x)) : (x))
 
@@ -17,7 +17,7 @@ public:
 
 	void printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const;
 	void genMap();
-
+	
 private:
 
 	enum	EZoneType
@@ -48,7 +48,7 @@ private:
 		EZoneType		type;
 	};
 
-	SCase		_map[MAP_SIZE * MAP_SIZE];
+	SCase			_map[MAP_SIZE * MAP_SIZE];
 
 	EZoneType checkZone(SZone *zones, unsigned int x, unsigned int y) const;
 };

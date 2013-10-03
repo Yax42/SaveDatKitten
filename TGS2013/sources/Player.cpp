@@ -19,7 +19,6 @@ void		Player::connection(unsigned int cube1ID, unsigned int side1, unsigned int 
 	side = side2;
   else
 	return ;
-  //move(static_cast<EDirection>(side));
   move(side);
 }
 
