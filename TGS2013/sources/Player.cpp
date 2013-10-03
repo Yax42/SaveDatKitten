@@ -60,13 +60,13 @@ void		Player::swapCubes()
 void		Player::move(int dir)
 {
     if (dir == EDirection::LEFT)
-      _x--;
-    if (dir == EDirection::TOP)
-      _y--;
-    if (dir == EDirection::RIGHT)
       _x++;
-    if (dir == EDirection::BOT)
+    if (dir == EDirection::TOP)
       _y++;
+    if (dir == EDirection::RIGHT)
+      _x--;
+    if (dir == EDirection::BOT)
+      _y--;
     if (clampPosition() == false)
 	swapCubes();
 }

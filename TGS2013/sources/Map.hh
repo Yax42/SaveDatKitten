@@ -30,16 +30,15 @@ private:
 
 	struct	STile
 	{
-		int					x, y;
-		Sifteo::AssetImage	*img;
-		
-		STile();
+		Sifteo::Int2 		pos;
+		unsigned int 		frame;
 	};
 
 	struct	SCase
 	{
 		EZoneType		type;
-		STile			tiles[8];
+		unsigned int 	plantNbr;
+		STile			plants[4];
 	};
 
 	struct	SZone

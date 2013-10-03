@@ -3,11 +3,6 @@
 
 const unsigned int	Map::size = MAP_SIZE;
 
-Map::STile::STile()
-{
-	img = NULL;
-}
-
 Map::Map()
 {
 }
@@ -34,6 +29,19 @@ void Map::genMap()
 		for (unsigned int x = 0; x < MAP_SIZE; ++x)
 		{
 			_map[y * MAP_SIZE + x].type = checkZone(zones, x, y);
+			_map[y * MAP_SIZE + x].plantNbr = static_cast<unsigned int>(random.random() * 4);
+			for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
+			{
+				_map[y * MAP_SIZE + x].plants[i].pos.x = static_cast<int>(random.random() * 128) - 32;
+				_map[y * MAP_SIZE + x].plants[i].pos.y = static_cast<int>(random.random() * 128) - 32;
+				if (x == 0 && _map[y * MAP_SIZE + x].plants[i].pos.x < 32)
+					_map[y * MAP_SIZE + x].plants[i].pos.x = 32;
+				else if (x == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.x > 128 - 32 - 64)
+					_map[y * MAP_SIZE + x].plants[i].pos.x = 128 - 32 - 64;
+				if (y == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.y > 128 - 32 - 64)
+					_map[y * MAP_SIZE + x].plants[i].pos.y = 128 - 32 - 64;
+				_map[y * MAP_SIZE + x].plants[i].frame = static_cast<unsigned int>(random.random() * 12);
+			}
 			if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
 				LOG("*");
 			else if (_map[y * MAP_SIZE + x].type == ZONE_SAND)
@@ -42,6 +50,7 @@ void Map::genMap()
 				LOG("+");
 		}
 	}
+	LOG("\n");
 }
 
 Map::EZoneType Map::checkZone(SZone *zones, unsigned int x, unsigned int y) const
@@ -66,4 +75,17 @@ Map::EZoneType Map::checkZone(SZone *zones, unsigned int x, unsigned int y) cons
 void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const
 {
 	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
+	for (unsigned int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
+	{
+		buffer.sprites[i].move(_map[y * MAP_SIZE + x].plants[i].pos.x, _map[y * MAP_SIZE + x].plants[i].pos.y);
+		buffer.sprites[i].setImage(Plants, _map[y * MAP_SIZE + x].plants[i].frame);
+	}
+	if (x == 0)
+		buffer.bg0.image(Sifteo::vec(0, 0), VerticalWall);
+	else if (x == MAP_SIZE - 1)
+		buffer.bg0.image(Sifteo::vec(128 / 8 - 32 / 8, 0), VerticalWall);
+	if (y == 0)
+		buffer.bg0.image(Sifteo::vec(0, 0), HorizontalWall);
+	else if (y == MAP_SIZE - 1)
+		buffer.bg0.image(Sifteo::vec(0, 128 / 8 - 32 / 8), HorizontalWall);
 }
