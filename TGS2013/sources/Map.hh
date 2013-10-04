@@ -2,8 +2,13 @@
 
 #include <sifteo.h>
 
-#define	MAP_SIZE	16
-#define	ZONE_NBR	16
+#define	MAP_SIZE		16
+#define	ZONE_NBR		16
+#define TILE_SIZE 		64
+#define WALL_THICK 		32
+#define SCREEN_SIZE 	128
+#define MAX_PLANT_NBR	4
+#define MAX_SPRITES 	8
 
 #define ABS(x)	(((x) < 0) ? (-(x)) : (x))
 
@@ -19,11 +24,10 @@ public:
 	void genMap();
 	
 private:
-
 	enum	EZoneType
 	{
-		ZONE_SAND,
 		ZONE_GRASS,
+		ZONE_SAND,
 		ZONE_ROCK,
 		ZONE_UNKNOWN
 	};
@@ -31,14 +35,14 @@ private:
 	struct	STile
 	{
 		Sifteo::Int2 		pos;
-		unsigned int 		frame;
+		unsigned char 		frame;
 	};
 
 	struct	SCase
 	{
 		EZoneType		type;
-		unsigned int 	plantNbr;
-		STile			plants[4];
+		unsigned char 	plantNbr;
+		STile			plants[MAX_PLANT_NBR];
 	};
 
 	struct	SZone
@@ -50,4 +54,8 @@ private:
 	SCase			_map[MAP_SIZE * MAP_SIZE];
 
 	EZoneType checkZone(SZone *zones, unsigned int x, unsigned int y) const;
+	bool isInTab(unsigned char *tab, unsigned char size, unsigned char value) const;
+	void drawSorted(Sifteo::VideoBuffer &buffer, STile const *tiles, unsigned int tabSize, unsigned int x, unsigned int y) const;
+	bool getNearestTree(unsigned int curIdx, unsigned int x, unsigned int y, unsigned int limit);
+	void chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &random);
 };
