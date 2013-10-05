@@ -1,8 +1,11 @@
 #include "Character.hh"
+#include "Player.hh"
 
-Character::Character(const Sifte::AssetImage & image, float x, float y, float maxSpeed) :
-	_image(image, _pos(x, y), _goal(0, 0), _goalAlive(false), _maxSpeed(maxSpeed)
+Character::Character(const Sifteo::AssetImage & image, float x, float y, float maxSpeed) :
+	_image(image), _pos(), _goal(), _goalAlive(false), _maxSpeed(maxSpeed)
 {
+	_pos.set(x, y);
+	_goal.set(0, 0);
 }
 
 void					Character::Update(float delta)
@@ -13,9 +16,9 @@ void					Character::Update(float delta)
 		return ;
 	}
 	Sifteo::Float2		prevDir = _goal - _pos;
-	Sifteo::Float2		velocity = (prevDir).normalized() * delta * _maxSpeed;
+	Sifteo::Float2		velocity = (prevDir).normalize() * delta * _maxSpeed;
 	_pos += velocity;
-	Sifteo::Float2		dir = (_goal - _pos).normalized();
+	Sifteo::Float2		dir = (_goal - _pos).normalize();
 	if ((dir.x < 0) != (prevDir.x < 0) || (dir.y < 0) != (prevDir.y < 0))
 	{
 		_goalAlive = 0;
@@ -24,11 +27,11 @@ void					Character::Update(float delta)
 		return ;
 	}
 
-	int		x = (dir.x < 0.3f && dir.x > -0.3f) ? 0
-				(dir.x > 0.3f) ? -1 : 1
+	int		x = (dir.x < 0.3f && dir.x > -0.3f) ? 0 :
+				(dir.x > 0.3f) ? -1 : 1;
 
-	int		y = (dir.y < 0.3f && dir.y > -0.3f) ? 0
-				(dir.y > 0.3f) ? -1 : 1
+	int		y = (dir.y < 0.3f && dir.y > -0.3f) ? 0 :
+				(dir.y > 0.3f) ? -1 : 1;
 
 	int		add = (x == 0 && y == -1) ? 0 :
 				(x == 1 && y == -1) ? 1 :
@@ -40,13 +43,19 @@ void					Character::Update(float delta)
 	_spriteId = ((_spriteId + 1) % 4) + add * 4;
 }
 
-void			Character::print()
+void				Character::print(Player &player)
 {
+	unsigned int	x = static_cast<unsigned int> (player.x());
+	unsigned int	y = static_cast<unsigned int> (player.y());
+
+	if (x != _pos.x / Sifteo::LCD_width || y != _pos.y / Sifteo::LCD_height)
+		return ;
+	player.cube().bg1.image(Sifteo::vec((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.x)) % Sifteo::LCD_height), _image, _spriteId);
 }
 
-void			Character::setGoal(const Sifteo::Float2 &newGoal)
+void			Character::setGoal(float x, float y)
 {
-	_goal = newGoal;
+	_goal.set(x, y);
 	_goalAlive = true;
 }
 

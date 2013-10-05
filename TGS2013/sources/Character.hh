@@ -1,21 +1,21 @@
 #pragma once
 
 #include <sifteo.h>
-#include <sifteo/math.h>
 
+class Player;
 
 class Character
 {
 public:
-	Character(const Sifte::AssetImage &image, float x, float y, float maxSPeed);
+	Character(const Sifteo::AssetImage &image, float x, float y, float maxSPeed);
 	~Character() {}
 	void			Update(float delta);
-	void			print();
-	void			setGoal(const Sifteo::Float2 &newGoal);
+	void			print(Player &player);
+	void			setGoal(float x, float y);
 	bool			goalAlive() const;
 
 private:
-	const Sifte::AssetImage	    &_image;
+	const Sifteo::AssetImage	&_image;
 	Sifteo::Float2				_pos;
 	Sifteo::Float2				_goal;
 	bool						_goalAlive;

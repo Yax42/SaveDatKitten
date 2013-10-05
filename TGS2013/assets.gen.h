@@ -9,8 +9,9 @@
 extern Sifteo::AssetGroup IconAssets;
 extern const Sifteo::AssetImage Icon;
 extern Sifteo::AssetGroup GameAssets;
-extern const Sifteo::AssetImage VerticalWall;
 extern const Sifteo::PinnedAssetImage GroundTiles;
+extern const Sifteo::PinnedAssetImage Pikachu;
+extern const Sifteo::AssetImage VerticalWall;
 extern const Sifteo::PinnedAssetImage Plants;
-extern const Sifteo::AssetImage HorizontalWall;
 extern const Sifteo::AssetImage BlackTile;
+extern const Sifteo::AssetImage HorizontalWall;

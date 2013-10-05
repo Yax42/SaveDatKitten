@@ -1,25 +1,43 @@
 #include "Player.hh"
 #include "Map.hh"
+#include "assets.gen.h"
 
-Player::Player(int x, int y, int currentCubeID, int otherCubeID) : _x(x), _y(y),
-	_currentCubeID(currentCubeID), _otherCubeID(otherCubeID)
+Player::Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube) : _x(x), _y(y),
+	_mainCube(mainCube), _sideCube(sideCube), _char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 5)
 {
     clampPosition();
 }
 
 Player::~Player(){}
 
-void		Player::connection(unsigned int cube1ID, unsigned int side1, unsigned int cube2ID, unsigned int side2)
+void		Player::connection(PlayerCube cube1, unsigned int side1, PlayerCube cube2, unsigned int side2)
 {
-  int		side;
+	int		mainSide;
+	int		sideSide;
+	Sifteo::Random				random;
+	random.seed();
 
-  if (cube1ID == _currentCubeID && cube2ID == _otherCubeID)
-	side = side1;
-  else if (cube2ID == _currentCubeID && cube1ID == _otherCubeID)
-	side = side2;
-  else
-	return ;
-  move(side);
+	if (cube1 == _mainCube && cube2 == _sideCube)
+	{
+		mainSide = side1;
+		sideSide = side2;
+	}
+	else if (cube2 == _mainCube && cube1 == _sideCube)
+	{
+		mainSide = side2;
+		sideSide = side1;
+	}
+	else
+		return ;
+	_char.setGoal(_x * Sifteo::LCD_width + 32 + static_cast<unsigned int>(random.random() * 32),
+				_y * Sifteo::LCD_height + static_cast<unsigned int>(random.random() * 64));
+	//gerrer l'orientation des cubes
+	move(mainSide);
+}
+
+void		Player::print(Player &player)
+{
+	_char.print(player);
 }
 
 /******PRIVATE******/
@@ -52,9 +70,9 @@ bool	Player::clampPosition()
 
 void		Player::swapCubes()
 {
-    int		tmp = _currentCubeID;
-    _currentCubeID = _otherCubeID;
-    _otherCubeID = tmp;
+    PlayerCube		tmp = _mainCube;
+    _mainCube = _sideCube;
+    _sideCube = tmp;
 }
 
 void		Player::move(int dir)
