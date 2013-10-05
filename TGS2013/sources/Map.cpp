@@ -11,6 +11,49 @@ Map::~Map()
 {
 }
 
+bool Map::getNearestTree(unsigned int curIdx, unsigned int x, unsigned int y, unsigned int limit)
+{
+	for (unsigned int j = 0; j < curIdx; ++j)
+	{
+		Sifteo::Int2 	vec;
+	
+		vec = _map[y * MAP_SIZE + x].plants[curIdx].pos - _map[y * MAP_SIZE + x].plants[j].pos;
+		if (static_cast<unsigned int>(vec.lenManhattan()) < limit)
+			return (true);
+	}
+	return (false);
+}
+
+void Map::chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &random)
+{
+	unsigned int 	len;
+
+	for (unsigned int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
+	{
+		random.seed();
+		do
+		{
+			_map[y * MAP_SIZE + x].plants[i].pos.x = random.raw() % SCREEN_SIZE - TILE_SIZE / 2;
+			_map[y * MAP_SIZE + x].plants[i].pos.y = random.raw() % SCREEN_SIZE - TILE_SIZE / 2;
+		if (x == 0 && _map[y * MAP_SIZE + x].plants[i].pos.x < WALL_THICK)
+			_map[y * MAP_SIZE + x].plants[i].pos.x = WALL_THICK;
+		else if (x == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.x > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
+			_map[y * MAP_SIZE + x].plants[i].pos.x = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
+		if (y == 0 && _map[y * MAP_SIZE + x].plants[i].pos.y < -TILE_SIZE / 2 + 10)
+			_map[y * MAP_SIZE + x].plants[i].pos.y = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
+		else if (y == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.y > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
+			_map[y * MAP_SIZE + x].plants[i].pos.y = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
+		} while (getNearestTree(i, x, y, 30));
+		// choose tile for zone
+		if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
+			_map[y * MAP_SIZE + x].plants[i].frame = random.raw() % 10;
+		else if (_map[y * MAP_SIZE + x].type == ZONE_ROCK)
+			_map[y * MAP_SIZE + x].plants[i].frame = 10 + random.raw() % 10;
+		else if (_map[y * MAP_SIZE + x].type == ZONE_SAND)
+			_map[y * MAP_SIZE + x].plants[i].frame = 20 + random.raw() % 10;
+	}
+}
+
 void Map::genMap()
 {
 	SZone						zones[ZONE_NBR];
@@ -19,8 +62,8 @@ void Map::genMap()
 	random.seed();
 	for (unsigned int i = 0; i < ZONE_NBR; ++i)
 	{
-		zones[i].posX = static_cast<unsigned int>(random.random() * MAP_SIZE);
-		zones[i].posY = static_cast<unsigned int>(random.random() * MAP_SIZE);
+		zones[i].posX = random.raw() % MAP_SIZE;
+		zones[i].posY = random.raw() % MAP_SIZE;
 		zones[i].type = static_cast<EZoneType>(i % 3);
 	}
 	for (unsigned int y = 0; y < MAP_SIZE; ++y)
@@ -29,25 +72,14 @@ void Map::genMap()
 		for (unsigned int x = 0; x < MAP_SIZE; ++x)
 		{
 			_map[y * MAP_SIZE + x].type = checkZone(zones, x, y);
-			_map[y * MAP_SIZE + x].plantNbr = static_cast<unsigned int>(random.random() * 4);
-			for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
-			{
-				_map[y * MAP_SIZE + x].plants[i].pos.x = static_cast<int>(random.random() * 128) - 32;
-				_map[y * MAP_SIZE + x].plants[i].pos.y = static_cast<int>(random.random() * 128) - 32;
-				if (x == 0 && _map[y * MAP_SIZE + x].plants[i].pos.x < 32)
-					_map[y * MAP_SIZE + x].plants[i].pos.x = 32;
-				else if (x == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.x > 128 - 32 - 64)
-					_map[y * MAP_SIZE + x].plants[i].pos.x = 128 - 32 - 64;
-				if (y == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.y > 128 - 32 - 64)
-					_map[y * MAP_SIZE + x].plants[i].pos.y = 128 - 32 - 64;
-				_map[y * MAP_SIZE + x].plants[i].frame = static_cast<unsigned int>(random.random() * 12);
-			}
+			_map[y * MAP_SIZE + x].plantNbr = random.raw() % MAX_PLANT_NBR;
+			chooseTreePositions(x, y, random);
 			if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
-				LOG("*");
+				LOG("G");
 			else if (_map[y * MAP_SIZE + x].type == ZONE_SAND)
-				LOG("o");
+				LOG("S");
 			else if (_map[y * MAP_SIZE + x].type == ZONE_ROCK)
-				LOG("+");
+				LOG("R");
 		}
 	}
 	LOG("\n");
@@ -72,20 +104,52 @@ Map::EZoneType Map::checkZone(SZone *zones, unsigned int x, unsigned int y) cons
 	return (nearest);
 }
 
+bool Map::isInTab(unsigned char *tab, unsigned char size, unsigned char value) const
+{
+	for (unsigned char i = 0; i < size; ++i)
+	{
+		if (tab[i] == value)
+			return (true);
+	}
+	return (false);
+}
+
+void Map::drawSorted(Sifteo::VideoBuffer &buffer, Map::STile const *tiles, unsigned int tabSize, unsigned int x, unsigned int y) const
+{
+	unsigned char 		drawed[MAX_SPRITES];
+
+	for (unsigned int i = 0; i < tabSize; ++i)
+	{
+		STile const	*cur = NULL;
+		
+		for (unsigned int j = 0; j < tabSize; ++j)
+		{
+			if (isInTab(drawed, i, j) == false && (cur == NULL || tiles[j].pos.y > cur->pos.y))
+			{
+				cur = tiles + j;
+				drawed[i] = j;
+			}
+		}
+	}
+	for (unsigned int i = 0; i < tabSize; ++i)
+	{
+		buffer.sprites[i].move(_map[y * MAP_SIZE + x].plants[drawed[i]].pos.x, _map[y * MAP_SIZE + x].plants[drawed[i]].pos.y);
+		buffer.sprites[i].setImage(Plants, _map[y * MAP_SIZE + x].plants[drawed[i]].frame);
+	}
+}
+
 void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const
 {
 	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
-	for (unsigned int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
-	{
-		buffer.sprites[i].move(_map[y * MAP_SIZE + x].plants[i].pos.x, _map[y * MAP_SIZE + x].plants[i].pos.y);
-		buffer.sprites[i].setImage(Plants, _map[y * MAP_SIZE + x].plants[i].frame);
-	}
+	for (unsigned int i = 0; i < 8; ++i)
+		buffer.sprites[i].setImage(Plants, 35);
+	drawSorted(buffer, &_map[y * MAP_SIZE + x].plants[0], _map[y * MAP_SIZE + x].plantNbr, x, y);
 	if (x == 0)
 		buffer.bg0.image(Sifteo::vec(0, 0), VerticalWall);
 	else if (x == MAP_SIZE - 1)
-		buffer.bg0.image(Sifteo::vec(128 / 8 - 32 / 8, 0), VerticalWall);
+		buffer.bg0.image(Sifteo::vec(SCREEN_SIZE / 8 - WALL_THICK / 8, 0), VerticalWall);
 	if (y == 0)
 		buffer.bg0.image(Sifteo::vec(0, 0), HorizontalWall);
 	else if (y == MAP_SIZE - 1)
-		buffer.bg0.image(Sifteo::vec(0, 128 / 8 - 32 / 8), HorizontalWall);
+		buffer.bg0.image(Sifteo::vec(0, SCREEN_SIZE / 8 - WALL_THICK / 8), HorizontalWall);
 }
