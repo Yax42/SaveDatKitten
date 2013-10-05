@@ -5,7 +5,7 @@
 #include "Random.hh"
 
 SaveKittens::SaveKittens() :
-	_player(0, 0, _cubes, _cubes + 1, 0)
+	_player(0, 0, _cubes, 0)
 {
 	_map.genMap();
 }
@@ -23,7 +23,6 @@ void SaveKittens::init()
 	_player.updateChar();
 	_map.printCase(_player);
 	_player.drawer().initSort();
-	_player.secondDrawer().initSort();
 //	Sifteo::Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
 	Sifteo::Events::cubeAccelChange.set(&SaveKittens::onCubeMove, this);
 }
@@ -50,8 +49,7 @@ void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned s
 {
 	if (_mode == EXPLORATION)
 	{
-		_player.connection(&_cubes[firstID], firstSide, &_cubes[secondID], secondSide);
-
+		_player.move();
 		_player.drawer().clean();
 		_map.printCase(_player);
 		_player.drawer().initSort();

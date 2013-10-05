@@ -7,34 +7,48 @@
 Character::Character(const Sifteo::PinnedAssetImage & image, float x, float y, float maxSpeed) :
 	_image(image), _pos(), _goal(), _goalAlive(false), _maxSpeed(maxSpeed), _speed(0)
 {
+	
 	SortSprites::addChar(this);
 	_pos.set(x, y);
 	_goal.set(0, 0);
+	_isDir = false;
+	_dir.x = 0;
+	_dir.y = 0;
+	
 }
 
 void					Character::update(float delta)
 {
-	if (_goalAlive == false)
+	Sifteo::Float2		dir;
+	if (_isDir)
 	{
-		if (static_cast<unsigned int>(gRandom.random() * 2))
+		Sifteo::Float2		velocity = (_dir).normalize() * delta * _speed;
+		_pos += velocity;
+		dir = (_dir).normalize();
+	}
+	else
+	{
+		if (_goalAlive == false)
 		{
-			_spriteId = 1;
+			if (static_cast<unsigned int>(gRandom.random() * 2))
+			{
+				_spriteId = 1;
+				return ;
+			}
+			else
+				setGoal(static_cast<int>(_goal.x / Sifteo::LCD_height), static_cast<int>(_goal.y / Sifteo::LCD_width), _maxSpeed / 4);
+		}
+		Sifteo::Float2		prevDir = _goal - _pos;
+		Sifteo::Float2		velocity = (prevDir).normalize() * delta * _speed;
+		_pos += velocity;
+		Sifteo::Float2		dir = (_goal - _pos).normalize();
+		if ((dir.x < 0) != (prevDir.x < 0) || (dir.y < 0) != (prevDir.y < 0))
+		{
+			_goalAlive = 0;
+			_pos = _goal;
+			_spriteId = 0;
 			return ;
 		}
-		else
-			setGoal(static_cast<int>(_goal.x / Sifteo::LCD_height), static_cast<int>(_goal.y / Sifteo::LCD_width), _maxSpeed / 4);
-	}
-	Sifteo::Float2		prevDir = _goal - _pos;
-	Sifteo::Float2		velocity = (prevDir).normalize() * delta * _speed;
-	_pos += velocity;
-//	LOG("TATATEOTOTYAAAYA %f\n", _pos.x);
-	Sifteo::Float2		dir = (_goal - _pos).normalize();
-	if ((dir.x < 0) != (prevDir.x < 0) || (dir.y < 0) != (prevDir.y < 0))
-	{
-		_goalAlive = 0;
-		_pos = _goal;
-		_spriteId = 0;
-		return ;
 	}
 
 	int		x = (dir.x < 0.5f && dir.x > -0.5f) ? 0 :
