@@ -9,7 +9,7 @@ class Character
 public:
 	Character(const Sifteo::AssetImage &image, float x, float y, float maxSPeed);
 	~Character() {}
-	void			Update(float delta);
+	void			update(float delta);
 	void			print(Player &player);
 	void			setGoal(float x, float y);
 	bool			goalAlive() const;

@@ -23,7 +23,8 @@ public:
     int							x() const { return _x; }
     int							y() const { return _y; }
     Sifteo::VideoBuffer			&cube() const { return *_mainCube; }
-	void						print(Player &player);
+	void						print(Player &player) { _char.print(player); }
+	void						update(float delta) { _char.update(delta); }
 
 private:
     int				_x;

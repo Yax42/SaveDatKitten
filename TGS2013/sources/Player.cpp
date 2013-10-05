@@ -35,10 +35,6 @@ void		Player::connection(PlayerCube cube1, unsigned int side1, PlayerCube cube2,
 	move(mainSide);
 }
 
-void		Player::print(Player &player)
-{
-	_char.print(player);
-}
 
 /******PRIVATE******/
 bool	Player::clampPosition()

@@ -22,6 +22,7 @@ void SaveKittens::init()
 
 void SaveKittens::update(Sifteo::TimeDelta dt)
 {
+	_player.update(dt);
 	_player.print(_player);
 }
 

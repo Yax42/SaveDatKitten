@@ -8,7 +8,7 @@ Character::Character(const Sifteo::AssetImage & image, float x, float y, float m
 	_goal.set(0, 0);
 }
 
-void					Character::Update(float delta)
+void					Character::update(float delta)
 {
 	if (_goalAlive == false)
 	{
@@ -50,7 +50,9 @@ void				Character::print(Player &player)
 
 	if (x != _pos.x / Sifteo::LCD_width || y != _pos.y / Sifteo::LCD_height)
 		return ;
-	player.cube().bg1.image(Sifteo::vec((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.x)) % Sifteo::LCD_height), _image, _spriteId);
+	//.bg0.image(Sifteo::vec((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height), _image, _spriteId);
+	player.cube().sprites[5].move((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height);
+	player.cube().sprites[5].setImage(_image, _spriteId);
 }
 
 void			Character::setGoal(float x, float y)
