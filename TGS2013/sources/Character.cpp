@@ -1,7 +1,7 @@
 #include "Character.hh"
 #include "Player.hh"
 
-Character::Character(const Sifteo::AssetImage & image, float x, float y, float maxSpeed) :
+Character::Character(const Sifteo::PinnedAssetImage & image, float x, float y, float maxSpeed) :
 	_image(image), _pos(), _goal(), _goalAlive(false), _maxSpeed(maxSpeed)
 {
 	_pos.set(x, y);

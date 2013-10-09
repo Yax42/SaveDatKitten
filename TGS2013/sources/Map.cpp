@@ -138,7 +138,7 @@ void Map::drawSorted(Sifteo::VideoBuffer &buffer, Map::STile const *tiles, unsig
 	}
 }
 
-void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y, bool isCur) const
+void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const
 {
 	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
 	for (unsigned int i = 0; i < 8; ++i)
@@ -152,6 +152,4 @@ void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y,
 		buffer.bg0.image(Sifteo::vec(0, 0), HorizontalWall);
 	else if (y == MAP_SIZE - 1)
 		buffer.bg0.image(Sifteo::vec(0, SCREEN_SIZE / 8 - WALL_THICK / 8), HorizontalWall);
-	if (isCur)
-		buffer.bg1.image(Sifteo::vec(0, 0), IsHere);
 }
