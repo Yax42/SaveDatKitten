@@ -7,3 +7,4 @@ Plants = image{"resources/plants.png", pinned=true, width=64, height=64}
 VerticalWall = image{"resources/sideWall.png"}
 HorizontalWall = image{"resources/topWall.png"}
 BlackTile = image{"resources/black.png"}
+IsHere = image{"resources/isHere.png"}

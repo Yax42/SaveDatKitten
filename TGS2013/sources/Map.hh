@@ -20,7 +20,7 @@ public:
 	Map();
 	~Map();
 
-	void printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const;
+	void printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y, bool isCur) const;
 	void genMap();
 	
 private:

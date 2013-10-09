@@ -35,15 +35,15 @@ void Map::chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &ra
 		{
 			_map[y * MAP_SIZE + x].plants[i].pos.x = random.raw() % SCREEN_SIZE - TILE_SIZE / 2;
 			_map[y * MAP_SIZE + x].plants[i].pos.y = random.raw() % SCREEN_SIZE - TILE_SIZE / 2;
-		if (x == 0 && _map[y * MAP_SIZE + x].plants[i].pos.x < WALL_THICK)
-			_map[y * MAP_SIZE + x].plants[i].pos.x = WALL_THICK;
-		else if (x == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.x > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
-			_map[y * MAP_SIZE + x].plants[i].pos.x = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
-		if (y == 0 && _map[y * MAP_SIZE + x].plants[i].pos.y < -TILE_SIZE / 2 + 10)
-			_map[y * MAP_SIZE + x].plants[i].pos.y = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
-		else if (y == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.y > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
-			_map[y * MAP_SIZE + x].plants[i].pos.y = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
-		} while (getNearestTree(i, x, y, 30));
+			if (x == 0 && _map[y * MAP_SIZE + x].plants[i].pos.x < WALL_THICK)
+				_map[y * MAP_SIZE + x].plants[i].pos.x = WALL_THICK;
+			else if (x == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.x > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
+				_map[y * MAP_SIZE + x].plants[i].pos.x = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
+			if (y == 0 && _map[y * MAP_SIZE + x].plants[i].pos.y < -TILE_SIZE / 2 + 10)
+				_map[y * MAP_SIZE + x].plants[i].pos.y = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
+			else if (y == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.y > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
+				_map[y * MAP_SIZE + x].plants[i].pos.y = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
+		} while (getNearestTree(i, x, y, 20));
 		// choose tile for zone
 		if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
 			_map[y * MAP_SIZE + x].plants[i].frame = random.raw() % 10;
@@ -138,7 +138,7 @@ void Map::drawSorted(Sifteo::VideoBuffer &buffer, Map::STile const *tiles, unsig
 	}
 }
 
-void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const
+void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y, bool isCur) const
 {
 	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
 	for (unsigned int i = 0; i < 8; ++i)
@@ -152,4 +152,6 @@ void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y)
 		buffer.bg0.image(Sifteo::vec(0, 0), HorizontalWall);
 	else if (y == MAP_SIZE - 1)
 		buffer.bg0.image(Sifteo::vec(0, SCREEN_SIZE / 8 - WALL_THICK / 8), HorizontalWall);
+	if (isCur)
+		buffer.bg1.image(Sifteo::vec(0, 0), IsHere);
 }

@@ -17,7 +17,7 @@ void SaveKittens::init()
 		_cubes[i].bg0.image(Sifteo::vec(0, 0), BlackTile);
 	}
 	Sifteo::Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
-	_map.printCase(_cubes[_player.cubeID()], _player.x(), _player.y());
+	_map.printCase(_cubes[_player.cubeID()], _player.x(), _player.y(), true);
 }
 
 void SaveKittens::update(Sifteo::TimeDelta dt)
@@ -26,7 +26,12 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 
 void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned secondID, unsigned secondSide)
 {
+	for (int i = 0; i < gNumCubes; ++i)
+	{
+		if (i != _player.cubeID())
+			_map.printCase(_cubes[i], _player.x(), _player.y(), false);
+	}
 	_player.connection(firstID, firstSide, secondID, secondSide);
-	_map.printCase(_cubes[_player.cubeID()], _player.x(), _player.y());
+	_map.printCase(_cubes[_player.cubeID()], _player.x(), _player.y(), true);
 	LOG("now in case %d %d\n", _player.x(), _player.y());
 }
