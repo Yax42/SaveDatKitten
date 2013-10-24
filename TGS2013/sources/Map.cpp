@@ -43,7 +43,7 @@ void Map::chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &ra
 				_map[y * MAP_SIZE + x].plants[i].pos.y = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
 			else if (y == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.y > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
 				_map[y * MAP_SIZE + x].plants[i].pos.y = SCREEN_SIZE - WALL_THICK - TILE_SIZE;
-		} while (getNearestTree(i, x, y, 20));
+		} while (getNearestTree(i, x, y, 30));
 		// choose tile for zone
 		if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
 			_map[y * MAP_SIZE + x].plants[i].frame = random.raw() % 10;
@@ -114,32 +114,17 @@ bool Map::isInTab(unsigned char *tab, unsigned char size, unsigned char value) c
 	return (false);
 }
 
-void Map::drawSorted(Sifteo::VideoBuffer &buffer, Map::STile const *tiles, unsigned int tabSize, unsigned int x, unsigned int y) const
+void Map::printCase(Sifteo::VideoBuffer &buffer, SortSprites &drawer, unsigned int x, unsigned int y) const
 {
-	unsigned char 		drawed[MAX_SPRITES];
+	SortSprites::SSprite		sprite;
 
-	for (unsigned int i = 0; i < tabSize; ++i)
+	for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
-		STile const	*cur = NULL;
-		
-		for (unsigned int j = 0; j < tabSize; ++j)
-		{
-			if (isInTab(drawed, i, j) == false && (cur == NULL || tiles[j].pos.y > cur->pos.y))
-			{
-				cur = tiles + j;
-				drawed[i] = j;
-			}
-		}
+		sprite.pos = _map[y * MAP_SIZE + x].plants[i].pos;
+		sprite.frame = _map[y * MAP_SIZE + x].plants[i].frame;
+		sprite.img = &Plants;
+		drawer.addSprite(sprite);
 	}
-	for (unsigned int i = 0; i < tabSize; ++i)
-	{
-		buffer.sprites[i].move(_map[y * MAP_SIZE + x].plants[drawed[i]].pos.x, _map[y * MAP_SIZE + x].plants[drawed[i]].pos.y);
-		buffer.sprites[i].setImage(Plants, _map[y * MAP_SIZE + x].plants[drawed[i]].frame);
-	}
-}
-
-void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const
-{
 	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
 	//for (unsigned int i = 0; i < 8; ++i)
 		//buffer.sprites[i].setImage(Plants, 35);

@@ -2,12 +2,14 @@
 
 #include <sifteo.h>
 
+#include "SortSprites.hh"
+
 #define	MAP_SIZE		16
 #define	ZONE_NBR		16
 #define TILE_SIZE 		64
 #define WALL_THICK 		32
 #define SCREEN_SIZE 	128
-#define MAX_PLANT_NBR	4
+#define MAX_PLANT_NBR	7
 #define MAX_SPRITES 	8
 
 #define ABS(x)	(((x) < 0) ? (-(x)) : (x))
@@ -20,7 +22,7 @@ public:
 	Map();
 	~Map();
 
-	void printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const;
+	void printCase(Sifteo::VideoBuffer &buffer, SortSprites &drawer, unsigned int x, unsigned int y) const;
 	void genMap();
 	
 private:
@@ -55,7 +57,6 @@ private:
 
 	EZoneType checkZone(SZone *zones, unsigned int x, unsigned int y) const;
 	bool isInTab(unsigned char *tab, unsigned char size, unsigned char value) const;
-	void drawSorted(Sifteo::VideoBuffer &buffer, STile const *tiles, unsigned int tabSize, unsigned int x, unsigned int y) const;
 	bool getNearestTree(unsigned int curIdx, unsigned int x, unsigned int y, unsigned int limit);
 	void chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &random);
 };
