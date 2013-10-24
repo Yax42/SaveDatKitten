@@ -16,6 +16,27 @@ SortSprites::~SortSprites()
 {
 }
 
+void			SortSprites::setCharacters()
+{
+	for (int i = 0; i < 1; ++i)
+	{
+		_toDraw[i].img = SortSprites::characters[i]->image();
+		++_spriteNbr;
+	}
+}
+
+void			SortSprites::updateCharacters()
+{
+	for (int i = 0; i < 1; ++i)
+	{
+		_toDraw[i].frame = SortSprites::characters[i]->frame();
+		_toDraw[i].pos.x = SortSprites::characters[i]->x();
+		_toDraw[i].pos.y = SortSprites::characters[i]->y();
+		_cube->sprites[i].move(_toDraw[i].pos.x, _toDraw[i].pos.y);
+		_cube->sprites[i].setImage(*(_toDraw[i].img), _toDraw[i].frame);
+	}
+}
+
 unsigned int	SortSprites::addSprite(unsigned int x,
 							   unsigned int y,
 							   unsigned int frame,
@@ -33,8 +54,6 @@ unsigned int	SortSprites::addSprite(unsigned int x,
 
 void	SortSprites::initSort()
 {
-	for (unsigned int i = 0; i < MAX_SPRITES; ++i)
-		_cube->sprites[i].setImage(Plants, 35);
 	for (int i = 0; i < _spriteNbr; ++i)
 		_sorted[i] = &_toDraw[i];
 	for (int i = 0; i < _spriteNbr; ++i)
@@ -49,19 +68,21 @@ void	SortSprites::initSort()
 				_sorted[j] = tmp;
 			}
 		}
-	for (int i = 0; i < MAX_SPRITES; ++i)
+	for (int i = 0; i < _spriteNbr; ++i)
 	{
 		_cube->sprites[i].move(_sorted[i]->pos.x, _sorted[i]->pos.y);
-		_cube->sprites[i].setImage(*_sorted[i]->img, _sorted[i]->frame);
+		_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
 	}
+	for (unsigned int i = _spriteNbr; i < MAX_SPRITES; ++i)
+		_cube->sprites[i].setImage(Plants, 35);
 }
 
 void	SortSprites::flush()
 {
-	bool		hasMoved = false;
-
+	updateCharacters();
+	return ;
 	for (int i = 0; i < _spriteNbr; ++i)
-		for (int j = i; j < _spriteNbr; ++j)
+		for (int j = i + 1; j < _spriteNbr; ++j)
 		{
 			if (*_sorted[i] < *_sorted[j])
 			{
@@ -70,10 +91,11 @@ void	SortSprites::flush()
 				tmp = _sorted[i];
 				_sorted[i] = _sorted[j];
 				_sorted[j] = tmp;
+				LOG("order change\n");
 				_cube->sprites[i].move(_sorted[i]->pos.x, _sorted[i]->pos.y);
-				_cube->sprites[i].setImage(*_sorted[i]->img, _sorted[i]->frame);
+				_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
 				_cube->sprites[j].move(_sorted[j]->pos.x, _sorted[j]->pos.y);
-				_cube->sprites[j].setImage(*_sorted[j]->img, _sorted[j]->frame);
+				_cube->sprites[j].setImage(*(_sorted[j]->img), _sorted[j]->frame);
 			}
 		}
 }

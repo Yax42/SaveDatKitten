@@ -35,6 +35,8 @@ public:
 	SortSprites(Sifteo::VideoBuffer &buffer);
 	~SortSprites();
 
+	void			setCharacters();
+	void			updateCharacters();
 	SSprite			&getById(unsigned int id) { return (_toDraw[id]); }
 	unsigned int	addSprite(unsigned int x, unsigned int y, unsigned int frame, Sifteo::PinnedAssetImage const *img);
 	void			initSort();

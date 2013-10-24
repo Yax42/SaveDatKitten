@@ -16,7 +16,10 @@ void SaveKittens::init()
 		_cubes[i].attach(i);
 		_cubes[i].bg0.image(Sifteo::vec(0, 0), BlackTile);
 	}
+	_player.updateChar();
 	Sifteo::Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
+	_map.printCase(_player);
+	_player.drawer().initSort();
 	//_map.printCase(_player.cube(), _drawer, _player.x(), _player.y());
 }
 
@@ -30,7 +33,7 @@ void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned s
 {
 	_player.connection(&_cubes[firstID], firstSide, &_cubes[secondID], secondSide);
 
-	_player.drawer().clean(3);
+	_player.drawer().clean(1);
 	_map.printCase(_player);
 	_player.drawer().initSort();
 

@@ -56,8 +56,8 @@ private:
 
 	SCase			_map[MAP_SIZE * MAP_SIZE];
 
-	EZoneType checkZone(SZone *zones, unsigned int x, unsigned int y) const;
-	bool isInTab(unsigned char *tab, unsigned char size, unsigned char value) const;
-	bool getNearestTree(unsigned int curIdx, unsigned int x, unsigned int y, unsigned int limit);
-	void chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &random);
+	EZoneType	checkZone(SZone *zones, unsigned int x, unsigned int y) const;
+	bool		isInTab(unsigned char *tab, unsigned char size, unsigned char value) const;
+	bool		getNearestTree(unsigned int curIdx, unsigned int x, unsigned int y, unsigned int limit);
+	void		chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &random);
 };

@@ -119,6 +119,7 @@ void Map::printCase(Player &player) const
 	unsigned int	x = static_cast<unsigned int>(player.x());
 	unsigned int	y = static_cast<unsigned int>(player.y());
 
+	LOG("Tree nbr = %d\n", _map[y * MAP_SIZE + x].plantNbr);
 	for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
 		player.drawer().addSprite(_map[y * MAP_SIZE + x].plants[i].pos.x,
