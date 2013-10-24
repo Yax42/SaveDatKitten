@@ -4,6 +4,7 @@
 
 #include "Map.hh"
 #include "Player.hh"
+#include "SortSprites.hh"
 
 static const unsigned int gNumCubes = 3;
 
@@ -13,6 +14,7 @@ private:
     Sifteo::VideoBuffer _cubes[gNumCubes];
 	Map					_map;
 	Player				_player;
+	SortSprites			_drawer;
 
 public:
 	SaveKittens();
