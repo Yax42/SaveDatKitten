@@ -9,7 +9,7 @@
 #define TILE_SIZE 		64
 #define WALL_THICK 		32
 #define SCREEN_SIZE 	128
-#define MAX_PLANT_NBR	7
+#define MAX_PLANT_NBR	4
 #define MAX_SPRITES 	8
 
 #define ABS(x)	(((x) < 0) ? (-(x)) : (x))

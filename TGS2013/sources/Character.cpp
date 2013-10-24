@@ -18,7 +18,7 @@ void					Character::update(float delta)
 	Sifteo::Float2		prevDir = _goal - _pos;
 	Sifteo::Float2		velocity = (prevDir).normalize(); //delta * _maxSpeed;
 	_pos += velocity;
-	LOG("TATATEOTOTYAAAYA %f\n", _pos.x);
+//	LOG("TATATEOTOTYAAAYA %f\n", _pos.x);
 	Sifteo::Float2		dir = (_goal - _pos).normalize();
 	if ((dir.x < 0) != (prevDir.x < 0) || (dir.y < 0) != (prevDir.y < 0))
 	{
@@ -44,7 +44,7 @@ void					Character::update(float delta)
 	_spriteId = ((_spriteId + 1) % 4) + add * 4;
 }
 
-void				Character::print(SortSprites &sprites, Sifteo::VideoBuffer *cube, unsigned int x, unsigned int y)
+void				Character::print(SortSprites &sprites, unsigned int x, unsigned int y)
 {
 	if (x != static_cast<unsigned int>(_pos.x / Sifteo::LCD_width) || y != static_cast<unsigned int>(_pos.y / Sifteo::LCD_height))
 		return ;

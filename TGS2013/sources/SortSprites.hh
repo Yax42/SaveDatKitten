@@ -2,6 +2,8 @@
 
 #include <sifteo.h>
 
+#include "Character.hh"
+
 #define	MAX_SPRITES		8
 
 class	SortSprites
@@ -28,15 +30,26 @@ public:
 		}
 	};
 
+	static Character			*characters[3];
+
 private:
-	SSprite			_toDraw[MAX_SPRITES];
-	SSprite			*_sorted[MAX_SPRITES];
-	unsigned int	_spriteNbr;
+	Sifteo::VideoBuffer			&_cube;
+	SSprite						_toDraw[MAX_SPRITES];
+	SSprite						*_sorted[MAX_SPRITES];
+	unsigned int				_spriteNbr;
+
+	SortSprites();
 
 public:
-	SortSprites();
+	SortSprites(Sifteo::VideoBuffer &buffer);
 	~SortSprites();
 
-	void	addSprite(unsigned int x, unsigned int y, unsigned int frame, Sifteo::PinnedAssetImage const *img);
-	void	flush(Sifteo::VideoBuffer &buffer);
+	SSprite			&getById(unsigned int id) { return (_toDraw[id]); }
+	unsigned int	addSprite(unsigned int x, unsigned int y, unsigned int frame, Sifteo::PinnedAssetImage const *img);
+	void			initSort();
+	void			flush();
+
+	void			clean(unsigned int keep = 3);
 };
+
+Character	*SortSprites::characters[] = { NULL, NULL, NULL };
