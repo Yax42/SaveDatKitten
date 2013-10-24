@@ -2,9 +2,10 @@
 #include "Map.hh"
 #include "assets.gen.h"
 
-Player::Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube) : _x(x), _y(y), _xOld(x), _yOld(y),
+Player::Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube, int id) : _x(x), _y(y), _xOld(x), _yOld(y),
 	_mainCube(mainCube), _sideCube(sideCube), _char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 5)
 {
+	SortSprites::characters[id] = &_char;
     clampPosition();
 }
 

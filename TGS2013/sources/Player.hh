@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Character.hh"
-typedef Sifteo::VideoBuffer *PlayerCube;
 
 namespace EDirection
 {
@@ -19,7 +18,7 @@ class Player
 public:
     Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube);
     ~Player();
-    void						connection(PlayerCube cube1, unsigned int side1, PlayerCube cube2, unsigned int side2);
+    void						connection(PlayerCube cube1, unsigned int side1, PlayerCube cube2, unsigned int side2, int id);
     int							x() const { return _x; }
     int							y() const { return _y; }
     int							xOld() const { return _xOld; }
