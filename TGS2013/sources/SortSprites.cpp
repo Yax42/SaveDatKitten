@@ -12,11 +12,17 @@ SortSprites::~SortSprites()
 {
 }
 
-void	SortSprites::addSprite(SSprite const &sprite)
+void	SortSprites::addSprite(unsigned int x,
+							   unsigned int y,
+							   unsigned int frame,
+							   Sifteo::PinnedAssetImage const *img)
 {
 	if (_spriteNbr == MAX_SPRITES)
 		return;
-	_toDraw[_spriteNbr] = sprite;
+	_toDraw[_spriteNbr].pos.x = x;
+	_toDraw[_spriteNbr].pos.y = y;
+	_toDraw[_spriteNbr].frame = frame;
+	_toDraw[_spriteNbr].img = img;
 	++_spriteNbr;
 }
 

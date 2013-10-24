@@ -17,19 +17,6 @@ public:
 		{
 		}
 
-		SSprite(SSprite const &sprite)
-		{
-			*this = sprite;
-		}
-
-		SSprite		&operator=(SSprite const &oth)
-		{
-			pos = oth.pos;
-			frame = oth.frame;
-			img = oth.img;
-			return (*this);
-		}
-
 		bool		operator<(SSprite const &oth)
 		{
 			return (pos.y < oth.pos.y);
@@ -50,6 +37,6 @@ public:
 	SortSprites();
 	~SortSprites();
 
-	void	addSprite(SSprite const &sprite);
+	void	addSprite(unsigned int x, unsigned int y, unsigned int frame, Sifteo::PinnedAssetImage const *img);
 	void	flush(Sifteo::VideoBuffer &buffer);
 };

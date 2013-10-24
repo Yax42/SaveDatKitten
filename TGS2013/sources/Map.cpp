@@ -116,19 +116,14 @@ bool Map::isInTab(unsigned char *tab, unsigned char size, unsigned char value) c
 
 void Map::printCase(Sifteo::VideoBuffer &buffer, SortSprites &drawer, unsigned int x, unsigned int y) const
 {
-	SortSprites::SSprite		sprite;
-
 	for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
-		sprite.pos = _map[y * MAP_SIZE + x].plants[i].pos;
-		sprite.frame = _map[y * MAP_SIZE + x].plants[i].frame;
-		sprite.img = &Plants;
-		drawer.addSprite(sprite);
+		drawer.addSprite(_map[y * MAP_SIZE + x].plants[i].pos.x,
+						 _map[y * MAP_SIZE + x].plants[i].pos.y,
+						 _map[y * MAP_SIZE + x].plants[i].frame,
+						 &Plants);
 	}
 	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
-	//for (unsigned int i = 0; i < 8; ++i)
-		//buffer.sprites[i].setImage(Plants, 35);
-	drawSorted(buffer, &_map[y * MAP_SIZE + x].plants[0], _map[y * MAP_SIZE + x].plantNbr, x, y);
 	if (x == 0)
 		buffer.bg0.image(Sifteo::vec(0, 0), VerticalWall);
 	else if (x == MAP_SIZE - 1)
