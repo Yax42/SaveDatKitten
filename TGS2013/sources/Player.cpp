@@ -107,3 +107,9 @@ void					Player::flush()
     _mainCube.drawer().flush();
     _sideCube.drawer().flush();
 }
+
+void					Player::updateChar()
+{
+    _mainCube.drawer().setCharacters();
+    _sideCube.drawer().setCharacters();
+}
