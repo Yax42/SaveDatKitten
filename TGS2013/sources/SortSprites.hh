@@ -51,3 +51,5 @@ public:
 
 	void			clean(unsigned int keep = 3);
 };
+
+Character	*SortSprites::characters[] = { NULL, NULL, NULL };
