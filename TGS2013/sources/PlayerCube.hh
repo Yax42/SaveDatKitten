@@ -1,11 +1,13 @@
 #pragma once
 
+#include "SortSprites.hh"
+
 class PlayerCube
 {
 public:
 	PlayerCube(Sifteo::VideoBuffer *cube);
 	~PlayerCube() {}
-	operator Sifteo::VideoBuffer &() { return (*_cube); }
+	Sifteo::VideoBuffer *cube() { return (_cube); }
 	SortSprites			&drawer() { return (_sprites); }
 
 private:

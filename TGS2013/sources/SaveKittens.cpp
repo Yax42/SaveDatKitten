@@ -17,28 +17,22 @@ void SaveKittens::init()
 		_cubes[i].bg0.image(Sifteo::vec(0, 0), BlackTile);
 	}
 	Sifteo::Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
-	_map.printCase(_player.cube(), _drawer, _player.x(), _player.y());
-	_drawer.flush(_player.cube());
+	//_map.printCase(_player.cube(), _drawer, _player.x(), _player.y());
 }
 
 void SaveKittens::update(Sifteo::TimeDelta dt)
 {
 	_player.update(dt);
-	_player.print(_drawer, _player.x(), _player.y());
-	_map.printCase(_player.cube(), _drawer, _player.x(), _player.y());
-	_drawer.flush(_player.cube());
-	if (_player.x() != _player.xOld() || _player.y() != _player.yOld())
-	{
-		_player.print(_drawer, _player.xOld(), _player.yOld());
-		_map.printCase(_player.cubeOld(), _drawer, _player.xOld(), _player.yOld());
-		_drawer.flush(_player.cubeOld());
-	}
+	_player.flush();
 }
 
 void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned secondID, unsigned secondSide)
 {
 	_player.connection(&_cubes[firstID], firstSide, &_cubes[secondID], secondSide);
+
+	_player.drawer().clean(3);
 	_map.printCase(_player);
-	LOG("now in case %d %d\n", _player.x(), _player.y());
-	_drawer.flush(_player.cube());
+	_player.drawer().initSort();
+
+	//LOG("now in case %d %d\n", _player.x(), _player.y());
 }

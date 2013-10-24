@@ -15,30 +15,21 @@ public:
 		unsigned char 					frame;
 		Sifteo::PinnedAssetImage const	*img;
 
-		SSprite()
-		{
-		}
+		SSprite() { }
 
-		bool		operator<(SSprite const &oth)
-		{
-			return (pos.y < oth.pos.y);
-		}
+		bool		operator<(SSprite const &oth) { return (pos.y < oth.pos.y); }
 
-		bool		operator>(SSprite const &oth)
-		{
-			return (pos.y > oth.pos.y);
-		}
+		bool		operator>(SSprite const &oth) { return (pos.y > oth.pos.y); }
 	};
 
 	static Character			*characters[3];
 
 private:
-	Sifteo::VideoBuffer			&_cube;
+	Sifteo::VideoBuffer			*_cube;
 	SSprite						_toDraw[MAX_SPRITES];
 	SSprite						*_sorted[MAX_SPRITES];
 	unsigned int				_spriteNbr;
 
-	SortSprites();
 
 public:
 	SortSprites(Sifteo::VideoBuffer &buffer);
@@ -51,5 +42,3 @@ public:
 
 	void			clean(unsigned int keep = 3);
 };
-
-Character	*SortSprites::characters[] = { NULL, NULL, NULL };

@@ -11,19 +11,19 @@ Player::Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube, int id) :
 
 Player::~Player(){}
 
-void		Player::connection(PlayerCube cube1, unsigned int side1, PlayerCube cube2, unsigned int side2)
+void		Player::connection(Sifteo::VideoBuffer *cube1, unsigned int side1, Sifteo::VideoBuffer *cube2, unsigned int side2)
 {
 	int		mainSide;
 	int		sideSide;
 	Sifteo::Random				random;
 	random.seed();
 
-	if (cube1 == _mainCube && cube2 == _sideCube)
+	if (cube1 == _mainCube.cube() && cube2 == _sideCube.cube())
 	{
 		mainSide = side1;
 		sideSide = side2;
 	}
-	else if (cube2 == _mainCube && cube1 == _sideCube)
+	else if (cube2 == _mainCube.cube() && cube1 == _sideCube.cube())
 	{
 		mainSide = side2;
 		sideSide = side1;
@@ -100,4 +100,10 @@ void		Player::move(int dir)
 	}
     if (clampPosition() == false)
 	swapCubes();
+}
+
+void					Player::flush()
+{
+    _mainCube.drawer().flush();
+    _sideCube.drawer().flush();
 }

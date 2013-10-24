@@ -121,18 +121,18 @@ void Map::printCase(Player &player) const
 
 	for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
-		drawer.addSprite(_map[y * MAP_SIZE + x].plants[i].pos.x,
+		player.drawer().addSprite(_map[y * MAP_SIZE + x].plants[i].pos.x,
 						 _map[y * MAP_SIZE + x].plants[i].pos.y,
 						 _map[y * MAP_SIZE + x].plants[i].frame,
 						 &Plants);
 	}
-	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
+	player.cube().bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
 	if (x == 0)
-		buffer.bg0.image(Sifteo::vec(0, 0), VerticalWall);
+		player.cube().bg0.image(Sifteo::vec(0, 0), VerticalWall);
 	else if (x == MAP_SIZE - 1)
-		buffer.bg0.image(Sifteo::vec(SCREEN_SIZE / 8 - WALL_THICK / 8, 0), VerticalWall);
+		player.cube().bg0.image(Sifteo::vec(SCREEN_SIZE / 8 - WALL_THICK / 8, 0), VerticalWall);
 	if (y == 0)
-		buffer.bg0.image(Sifteo::vec(0, 0), HorizontalWall);
+		player.cube().bg0.image(Sifteo::vec(0, 0), HorizontalWall);
 	else if (y == MAP_SIZE - 1)
-		buffer.bg0.image(Sifteo::vec(0, SCREEN_SIZE / 8 - WALL_THICK / 8), HorizontalWall);
+		player.cube().bg0.image(Sifteo::vec(0, SCREEN_SIZE / 8 - WALL_THICK / 8), HorizontalWall);
 }

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <sifteo.h>
-#include "SortSprites.hh"
 
 class Player;
+class SortSprites;
 
 class Character
 {

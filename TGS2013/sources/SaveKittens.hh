@@ -14,7 +14,6 @@ private:
     Sifteo::VideoBuffer _cubes[gNumCubes];
 	Map					_map;
 	Player				_player;
-	SortSprites			_drawer;
 
 public:
 	SaveKittens();

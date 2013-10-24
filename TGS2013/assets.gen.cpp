@@ -5202,27 +5202,6 @@ extern const Sifteo::PinnedAssetImage Pikachu = {{
     /* pData    */ 768
 }};
 
-extern const uint16_t BlackTile_data[];
-
-extern const Sifteo::AssetImage BlackTile = {{
-    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
-    /* width    */ 16,
-    /* height   */ 16,
-    /* frames   */ 1,
-    /* format   */ _SYS_AIF_DUB_I8,
-    /* reserved */ 0,
-    /* pData    */ reinterpret_cast<uintptr_t>(BlackTile_data)
-}};
-
-const uint16_t BlackTile_data[] = {
-    0x0b01,0x2017,0x46fc,0x3ca8,0x20cc,0x752d,0xc2b8,0xaa58,
-    0x8970,0xb4e1,0x12a7,0x00d7,0x46fc,0x5ba8,0x61cc,0x52c6,
-    0x6987,0xd616,0x8553,0xce6b,0x3d70,0xb855,0x2d67,0x3c2e,
-    0x0055,0x46fc,0x44a8,0xa3b5,0x1712,0x4a8e,0x38dc,0x912a,
-    0xa8e3,0x005b,0xd6fc,0x8e63,0xea59,0xe550,0x44a8,0xa386,
-    0x7512,0xca8e,0x0004,
-};
-
 extern const uint16_t IsHere_data[];
 
 extern const Sifteo::AssetImage IsHere = {{
@@ -5245,18 +5224,6 @@ const uint16_t IsHere_data[] = {
     0xe951,0x2a3b,0x477d,0xcfa5,0x8952,0x0003,
 };
 
-extern const uint16_t Plants_data[];
-
-extern const Sifteo::PinnedAssetImage Plants = {{
-    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
-    /* width    */ 8,
-    /* height   */ 8,
-    /* frames   */ 40,
-    /* format   */ _SYS_AIF_PINNED,
-    /* reserved */ 0,
-    /* pData    */ 1344
-}};
-
 extern const uint16_t HorizontalWall_data[];
 
 extern const Sifteo::AssetImage HorizontalWall = {{
@@ -5273,6 +5240,39 @@ const uint16_t HorizontalWall_data[] = {
     0x0000,0xe6fc,0x1c61,0x6247,0x1c30,0xf247,0x8e30,0x3123,
     0x8e18,0x0123,
 };
+
+extern const uint16_t BlackTile_data[];
+
+extern const Sifteo::AssetImage BlackTile = {{
+    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
+    /* width    */ 16,
+    /* height   */ 16,
+    /* frames   */ 1,
+    /* format   */ _SYS_AIF_DUB_I8,
+    /* reserved */ 0,
+    /* pData    */ reinterpret_cast<uintptr_t>(BlackTile_data)
+}};
+
+const uint16_t BlackTile_data[] = {
+    0x0b01,0x2017,0x46fc,0x3ca8,0x20cc,0x752d,0xc2b8,0xaa58,
+    0x8970,0xb4e1,0x12a7,0x00d7,0x46fc,0x5ba8,0x61cc,0x52c6,
+    0x6987,0xd616,0x8553,0xce6b,0x3d70,0xb855,0x2d67,0x3c2e,
+    0x0055,0x46fc,0x44a8,0xa3b5,0x1712,0x4a8e,0x38dc,0x912a,
+    0xa8e3,0x005b,0xd6fc,0x8e63,0xea59,0xe550,0x44a8,0xa386,
+    0x7512,0xca8e,0x0004,
+};
+
+extern const uint16_t Plants_data[];
+
+extern const Sifteo::PinnedAssetImage Plants = {{
+    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
+    /* width    */ 8,
+    /* height   */ 8,
+    /* frames   */ 40,
+    /* format   */ _SYS_AIF_PINNED,
+    /* reserved */ 0,
+    /* pData    */ 1344
+}};
 
 
 static const struct {
