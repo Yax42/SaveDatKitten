@@ -1,4 +1,5 @@
 #include "Character.hh"
+#include "SortSprites.hh"
 #include "Player.hh"
 
 Character::Character(const Sifteo::PinnedAssetImage & image, float x, float y, float maxSpeed) :
@@ -34,27 +35,26 @@ void					Character::update(float delta)
 	int		y = (dir.y < 0.3f && dir.y > -0.3f) ? 0 :
 				(dir.y > 0.3f) ? -1 : 1;
 
-	int		add = (x == 0 && y == -1) ? 0 :
-				(x == 1 && y == -1) ? 1 :
-				(x == 1 && y == 0) ? 2 :
-				(x == 1 && y == 1) ? 3 :
-				(x == 0 && y == 1) ? 4 :
-				(x == -1 && y == 1) ? 5 :
-				(x == -1 && y == 0) ? 6 : 7;
+	int		add = (x == 0 && y == -1)	? 0 :
+				(x == 1 && y == -1)		? 1 :
+				(x == 1 && y == 0)		? 2 :
+				(x == 1 && y == 1)		? 3 :
+				(x == 0 && y == 1)		? 4 :
+				(x == -1 && y == 1)		? 5 :
+				(x == -1 && y == 0)		? 6 : 7;
 	_spriteId = ((_spriteId + 1) % 4) + add * 4;
 }
 
-void				Character::print(Player &player)
+void				Character::print(SortSprites &sprites, Sifteo::VideoBuffer *cube, unsigned int x, unsigned int y)
 {
-	unsigned int	x = static_cast<unsigned int> (player.x());
-	unsigned int	y = static_cast<unsigned int> (player.y());
-
-	//if (x != _pos.x / Sifteo::LCD_width || y != _pos.y / Sifteo::LCD_height)
-		//return ;
-		LOG("TEST");
+	if (x != static_cast<unsigned int>(_pos.x / Sifteo::LCD_width) || y != static_cast<unsigned int>(_pos.y / Sifteo::LCD_height))
+		return ;
+	sprites.add((static_cast<unsigned int>(_pos.x)) % Sifteo::LCD_width,
+				(static_cast<unsigned int>(_pos.y)) % Sifteo::LCD_height,
+				_spriteId, _image);
 	//.bg0.image(Sifteo::vec((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height), _image, _spriteId);
-	player.cube().sprites[5].move((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height);
-	player.cube().sprites[5].setImage(_image, _spriteId);
+	//player.cube().sprites[5].move((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height);
+	//player.cube().sprites[5].setImage(_image, _spriteId);
 }
 
 void			Character::setGoal(float x, float y)

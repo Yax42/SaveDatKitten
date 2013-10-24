@@ -10,7 +10,7 @@ public:
 	Character(const Sifteo::PinnedAssetImage &image, float x, float y, float maxSPeed);
 	~Character() {}
 	void			update(float delta);
-	void			print(Player &player);
+	void			print(SortSprites &sprites, Sifteo::VideoBuffer *cube, unsigned int x, unsigned int y);
 	void			setGoal(float x, float y);
 	bool			goalAlive() const;
 
