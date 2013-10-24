@@ -114,8 +114,11 @@ bool Map::isInTab(unsigned char *tab, unsigned char size, unsigned char value) c
 	return (false);
 }
 
-void Map::printCase(Sifteo::VideoBuffer &buffer, SortSprites &drawer, unsigned int x, unsigned int y) const
+void Map::printCase(Player &player) const
 {
+	unsigned int	x = static_cast<unsigned int>(player.x());
+	unsigned int	y = static_cast<unsigned int>(player.y());
+
 	for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
 		drawer.addSprite(_map[y * MAP_SIZE + x].plants[i].pos.x,

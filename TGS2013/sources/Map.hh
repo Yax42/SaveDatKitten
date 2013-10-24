@@ -3,6 +3,7 @@
 #include <sifteo.h>
 
 #include "SortSprites.hh"
+#include "Player.hh"
 
 #define	MAP_SIZE		16
 #define	ZONE_NBR		16
@@ -22,7 +23,7 @@ public:
 	Map();
 	~Map();
 
-	void printCase(Sifteo::VideoBuffer &buffer, SortSprites &drawer, unsigned int x, unsigned int y) const;
+	void printCase(Player &player) const;
 	void genMap();
 	
 private:
