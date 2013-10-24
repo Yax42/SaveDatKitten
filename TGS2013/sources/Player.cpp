@@ -2,7 +2,7 @@
 #include "Map.hh"
 #include "assets.gen.h"
 
-Player::Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube) : _x(x), _y(y),
+Player::Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube) : _x(x), _y(y), _xOld(x), _yOld(y),
 	_mainCube(mainCube), _sideCube(sideCube), _char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 5)
 {
     clampPosition();
@@ -43,23 +43,27 @@ bool	Player::clampPosition()
 
     if (_x < 0)
     {
-	_x = 0;
-	change = true;
+		_x = 0;
+		_xOld = _x + 1;
+		change = true;
     }
     else if (_x >= Map::size)
     {
-	_x = Map::size - 1;
-	change = true;
+		_x = Map::size - 1;
+		_xOld = _x - 1;
+		change = true;
     }
     if (_y < 0)
     {
-	_y = 0;
-	change = true;
+		_y = 0;
+		_yOld = _y + 1;
+		change = true;
     }
     else if (_y >= Map::size)
     {
-	_y = Map::size - 1;
-	change = true;
+		_y = Map::size - 1;
+		_yOld = _y - 1;
+		change = true;
     }
     return (change);
 }
@@ -74,13 +78,25 @@ void		Player::swapCubes()
 void		Player::move(int dir)
 {
     if (dir == EDirection::LEFT)
-      _x++;
+	{
+		_xOld = _x;
+		_x++;
+	}
     if (dir == EDirection::TOP)
-      _y++;
+	{
+		_yOld = _y;
+		_y++;
+	}
     if (dir == EDirection::RIGHT)
-      _x--;
+	{
+		_xOld = _x;
+		_x--;
+	}
     if (dir == EDirection::BOT)
-      _y--;
+	{
+		_yOld = _y;
+		_y--;
+	}
     if (clampPosition() == false)
 	swapCubes();
 }

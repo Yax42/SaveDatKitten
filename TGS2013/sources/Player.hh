@@ -22,6 +22,8 @@ public:
     void						connection(PlayerCube cube1, unsigned int side1, PlayerCube cube2, unsigned int side2);
     int							x() const { return _x; }
     int							y() const { return _y; }
+    int							xOld() const { return _xOld; }
+    int							yOld() const { return _yOld; }
     Sifteo::VideoBuffer			&cube() const { return *_mainCube; }
 	void						print(Player &player) { _char.print(player); }
 	void						update(float delta) { _char.update(delta); }
@@ -29,6 +31,8 @@ public:
 private:
     int				_x;
     int				_y;
+    int				_xOld;
+    int				_yOld;
     PlayerCube		_mainCube;
     PlayerCube		_sideCube;
 	Character		_char;

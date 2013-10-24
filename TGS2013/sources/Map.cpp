@@ -141,8 +141,8 @@ void Map::drawSorted(Sifteo::VideoBuffer &buffer, Map::STile const *tiles, unsig
 void Map::printCase(Sifteo::VideoBuffer &buffer, unsigned int x, unsigned int y) const
 {
 	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
-	for (unsigned int i = 0; i < 8; ++i)
-		buffer.sprites[i].setImage(Plants, 35);
+	//for (unsigned int i = 0; i < 8; ++i)
+		//buffer.sprites[i].setImage(Plants, 35);
 	drawSorted(buffer, &_map[y * MAP_SIZE + x].plants[0], _map[y * MAP_SIZE + x].plantNbr, x, y);
 	if (x == 0)
 		buffer.bg0.image(Sifteo::vec(0, 0), VerticalWall);

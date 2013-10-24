@@ -16,8 +16,9 @@ void					Character::update(float delta)
 		return ;
 	}
 	Sifteo::Float2		prevDir = _goal - _pos;
-	Sifteo::Float2		velocity = (prevDir).normalize() * delta * _maxSpeed;
+	Sifteo::Float2		velocity = (prevDir).normalize(); //delta * _maxSpeed;
 	_pos += velocity;
+	LOG("TATATEOTOTYAAAYA %f\n", _pos.x);
 	Sifteo::Float2		dir = (_goal - _pos).normalize();
 	if ((dir.x < 0) != (prevDir.x < 0) || (dir.y < 0) != (prevDir.y < 0))
 	{
@@ -48,8 +49,9 @@ void				Character::print(Player &player)
 	unsigned int	x = static_cast<unsigned int> (player.x());
 	unsigned int	y = static_cast<unsigned int> (player.y());
 
-	if (x != _pos.x / Sifteo::LCD_width || y != _pos.y / Sifteo::LCD_height)
-		return ;
+	//if (x != _pos.x / Sifteo::LCD_width || y != _pos.y / Sifteo::LCD_height)
+		//return ;
+		LOG("TEST");
 	//.bg0.image(Sifteo::vec((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height), _image, _spriteId);
 	player.cube().sprites[5].move((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height);
 	player.cube().sprites[5].setImage(_image, _spriteId);
