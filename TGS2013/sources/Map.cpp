@@ -126,9 +126,12 @@ void Map::printCase(Sifteo::VideoBuffer &buffer, SortSprites &drawer, unsigned i
 		drawer.addSprite(sprite);
 	}
 	buffer.bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
+<<<<<<< HEAD
 	//for (unsigned int i = 0; i < 8; ++i)
 		//buffer.sprites[i].setImage(Plants, 35);
 	drawSorted(buffer, &_map[y * MAP_SIZE + x].plants[0], _map[y * MAP_SIZE + x].plantNbr, x, y);
+=======
+>>>>>>> 0b28b8d10a78648a10b84ef1c287a6568acd59e6
 	if (x == 0)
 		buffer.bg0.image(Sifteo::vec(0, 0), VerticalWall);
 	else if (x == MAP_SIZE - 1)
