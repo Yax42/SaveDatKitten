@@ -3,7 +3,7 @@
 #include "assets.gen.h"
 
 SaveKittens::SaveKittens() :
-	_player(0, 0, &_cubes[0], &_cubes[1])
+	_player(0, 0, &_cubes[0], &_cubes[1], 0)
 {
 	_map.genMap();
 }
@@ -38,6 +38,7 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned secondID, unsigned secondSide)
 {
 	_player.connection(&_cubes[firstID], firstSide, &_cubes[secondID], secondSide);
+	_map.printCase(_player);
 	LOG("now in case %d %d\n", _player.x(), _player.y());
 	_drawer.flush(_player.cube());
 }
