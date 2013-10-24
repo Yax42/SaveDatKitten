@@ -1,5 +1,4 @@
 #include "Character.hh"
-#include "SortSprites.hh"
 #include "Player.hh"
 
 Character::Character(const Sifteo::PinnedAssetImage & image, float x, float y, float maxSpeed) :
@@ -49,9 +48,9 @@ void				Character::print(SortSprites &sprites, Sifteo::VideoBuffer *cube, unsign
 {
 	if (x != static_cast<unsigned int>(_pos.x / Sifteo::LCD_width) || y != static_cast<unsigned int>(_pos.y / Sifteo::LCD_height))
 		return ;
-	sprites.add((static_cast<unsigned int>(_pos.x)) % Sifteo::LCD_width,
+	sprites.addSprite((static_cast<unsigned int>(_pos.x)) % Sifteo::LCD_width,
 				(static_cast<unsigned int>(_pos.y)) % Sifteo::LCD_height,
-				_spriteId, _image);
+				_spriteId, &_image);
 	//.bg0.image(Sifteo::vec((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height), _image, _spriteId);
 	//player.cube().sprites[5].move((static_cast<int>(_pos.x)) % Sifteo::LCD_width, (static_cast<int>(_pos.y)) % Sifteo::LCD_height);
 	//player.cube().sprites[5].setImage(_image, _spriteId);

@@ -24,7 +24,7 @@ void SaveKittens::init()
 void SaveKittens::update(Sifteo::TimeDelta dt)
 {
 	_player.update(dt);
-	_player.print(_player);
+	//_player.print(_player);
 }
 
 void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned secondID, unsigned secondSide)

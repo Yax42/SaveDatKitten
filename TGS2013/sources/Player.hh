@@ -25,7 +25,6 @@ public:
     int							xOld() const { return _xOld; }
     int							yOld() const { return _yOld; }
     Sifteo::VideoBuffer			&cube() const { return *_mainCube; }
-	void						print(Player &player) { _char.print(player); }
 	void						update(float delta) { _char.update(delta); }
 	void						print(SortSprites &sprites, Sifteo::VideoBuffer *cube, unsigned int x, unsigned int y) { _char.print(sprites, cube, x, y); }
 
