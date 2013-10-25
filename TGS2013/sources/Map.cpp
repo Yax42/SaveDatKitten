@@ -34,7 +34,7 @@ void Map::chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &ra
 		do
 		{
 			_map[y * MAP_SIZE + x].plants[i].pos.x = random.raw() % SCREEN_SIZE - TILE_SIZE / 2;
-			_map[y * MAP_SIZE + x].plants[i].pos.y = random.raw() % SCREEN_SIZE - TILE_SIZE / 2;
+			_map[y * MAP_SIZE + x].plants[i].pos.y = random.raw() % SCREEN_SIZE - TILE_SIZE / 3;
 			if (x == 0 && _map[y * MAP_SIZE + x].plants[i].pos.x < WALL_THICK)
 				_map[y * MAP_SIZE + x].plants[i].pos.x = WALL_THICK;
 			else if (x == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.x > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
