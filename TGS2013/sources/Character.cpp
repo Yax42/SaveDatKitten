@@ -13,7 +13,7 @@ void					Character::update(float delta)
 {
 	if (_goalAlive == false)
 	{
-		_spriteId = 0;
+		_spriteId = 1;
 		return ;
 	}
 	Sifteo::Float2		prevDir = _goal - _pos;
@@ -36,12 +36,12 @@ void					Character::update(float delta)
 				(dir.y > 0.3f) ? -1 : 1;
 
 	int		add = (x == 0 && y == -1)	? 0 :
-				(x == 1 && y == -1)		? 1 :
-				(x == 1 && y == 0)		? 2 :
-				(x == 1 && y == 1)		? 3 :
+				(x == 1 && y == -1)		? 7 :
+				(x == 1 && y == 0)		? 6 :
+				(x == 1 && y == 1)		? 5 :
 				(x == 0 && y == 1)		? 4 :
-				(x == -1 && y == 1)		? 5 :
-				(x == -1 && y == 0)		? 6 : 7;
+				(x == -1 && y == 1)		? 3 :
+				(x == -1 && y == 0)		? 2 : 1;
 	_spriteId = ((_spriteId + 1) % 4) + add * 4;
 }
 

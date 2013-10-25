@@ -33,8 +33,6 @@ void			SortSprites::updateCharacters(int x, int y)
 		int			newX = SortSprites::characters[i]->x() - x * Sifteo::LCD_width;
 		int			newY = SortSprites::characters[i]->y() - y * Sifteo::LCD_height;
 
-//		LOG("x = %d y = %d\n", newX, newY);
-
 		if ( newX < -32 ||
 			newX > Sifteo::LCD_width ||
 			newY < -32 ||

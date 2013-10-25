@@ -38,10 +38,10 @@ void		Player::connection(Sifteo::VideoBuffer *cube1, unsigned int side1, Sifteo:
 	}
 	else
 		return ;
-	_char.setGoal(_x * Sifteo::LCD_width + 32 + static_cast<unsigned int>(random.random() * 32),
-				_y * Sifteo::LCD_height + static_cast<unsigned int>(random.random() * 64));
 	//gerrer l'orientation des cubes
 	move(mainSide);
+	_char.setGoal(_x * Sifteo::LCD_width + 32 + static_cast<unsigned int>(random.random() * 32),
+				_y * Sifteo::LCD_height + static_cast<unsigned int>(random.random() * 64));
 }
 
 
