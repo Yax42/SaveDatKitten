@@ -17,9 +17,10 @@ void SaveKittens::init()
 		_cubes[i].bg0.image(Sifteo::vec(0, 0), BlackTile);
 	}
 	_player.updateChar();
-	Sifteo::Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
 	_map.printCase(_player);
 	_player.drawer().initSort();
+	_player.secondDrawer().initSort();
+	Sifteo::Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
 	//_map.printCase(_player.cube(), _drawer, _player.x(), _player.y());
 }
 

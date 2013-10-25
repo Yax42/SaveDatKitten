@@ -58,14 +58,13 @@ unsigned int	SortSprites::addSprite(unsigned int x,
 {
 	if (_spriteNbr >= MAX_SPRITES)
 		return 0;
-	LOG("gx = %d\ngy = %d\n------------\n", x, y);
+	//	LOG("gx = %d\ngy = %d\n------------\n", x, y);
 	_toDraw[_spriteNbr].x = x;
 	_toDraw[_spriteNbr].y = y;
 	_toDraw[_spriteNbr].frame = frame;
 	_toDraw[_spriteNbr].img = img;
 	_toDraw[_spriteNbr].idx = _spriteNbr;
-	++_spriteNbr;
-	return (_spriteNbr - 1);
+	return (_spriteNbr++);
 }
 
 void	SortSprites::swap(int i, int j)
@@ -86,14 +85,16 @@ void	SortSprites::initSort()
 	for (int i = 0; i < _spriteNbr; ++i)
 		_sorted[i] = &_toDraw[i];
 	for (int i = 0; i < _spriteNbr; ++i)
+	{
 		for (int j = i + 1; j < _spriteNbr; ++j)
 		{
 			if (*_sorted[i] < *_sorted[j])
 				swap(i, j);
 		}
+	}
 	for (int i = 0; i < _spriteNbr; ++i)
 	{
-		LOG("x = %d\ny = %d\n------------\n", _sorted[i]->x, _sorted[i]->y);
+//		LOG("x = %d\ny = %d\n------------\n", _sorted[i]->x, _sorted[i]->y);
 		_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
 		_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
 	}
@@ -104,6 +105,7 @@ void	SortSprites::initSort()
 void	SortSprites::flush()
 {
 	for (int i = 0; i < _spriteNbr; ++i)
+	{
 		for (int j = i + 1; j < _spriteNbr; ++j)
 		{
 			if (*_sorted[i] < *_sorted[j])
@@ -116,6 +118,7 @@ void	SortSprites::flush()
 				_cube->sprites[j].setImage(*(_sorted[j]->img), _sorted[j]->frame);
 			}
 		}
+	}
 }
 
 void	SortSprites::clean()

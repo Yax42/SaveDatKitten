@@ -27,6 +27,7 @@ public:
     Sifteo::VideoBuffer			&cube() { return *_mainCube->cube(); }
     Sifteo::VideoBuffer			&cubeOld() { return *_sideCube->cube(); }
 	SortSprites					&drawer() { return (_mainCube->drawer()); }
+	SortSprites					&secondDrawer() { return (_sideCube->drawer()); }
 	void						update(float delta) { _char.update(delta); }
 	void						updateChar();
 	void						flush();
