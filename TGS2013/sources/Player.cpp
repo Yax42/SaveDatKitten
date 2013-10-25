@@ -112,7 +112,7 @@ void		Player::move(int dir)
 
 void					Player::flush()
 {
-	_sideCube->drawer().updateCharacters(_x, _y);
+	_mainCube->drawer().updateCharacters(_x, _y);
     _mainCube->drawer().flush();
 	_sideCube->drawer().updateCharacters(_xOld, _yOld);
     _sideCube->drawer().flush();
