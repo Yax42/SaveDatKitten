@@ -12,6 +12,7 @@ class	SortSprites
 public:
 	struct	SSprite
 	{
+		unsigned int					x, y;
 		Sifteo::Int2 					pos;
 		unsigned char 					frame;
 		Sifteo::PinnedAssetImage const	*img;
@@ -19,9 +20,9 @@ public:
 
 		SSprite() { }
 
-		bool		operator<(SSprite const &oth) { return (pos.y < oth.pos.y); }
+		bool		operator<(SSprite const &oth) { return (y + img->pixelHeight() < oth.y + oth.img->pixelHeight()); }
 
-		bool		operator>(SSprite const &oth) { return (pos.y > oth.pos.y); }
+		bool		operator>(SSprite const &oth) { return (y + img->pixelHeight() > oth.y + oth.img->pixelHeight()); }
 	};
 
 	static Character			*characters[NB_CHARS];
@@ -31,6 +32,8 @@ private:
 	SSprite						_toDraw[MAX_SPRITES];
 	SSprite						*_sorted[MAX_SPRITES];
 	unsigned int				_spriteNbr;
+
+	void						swap(int i, int j);
 
 public:
 	SortSprites(Sifteo::VideoBuffer &buffer);

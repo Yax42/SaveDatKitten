@@ -33,7 +33,7 @@ void			SortSprites::updateCharacters(int x, int y)
 		int			newX = SortSprites::characters[i]->x() - x * Sifteo::LCD_width;
 		int			newY = SortSprites::characters[i]->y() - y * Sifteo::LCD_height;
 
-		LOG("x = %d y = %d\n", newX, newY);
+//		LOG("x = %d y = %d\n", newX, newY);
 
 		if ( newX < -32 ||
 			newX > Sifteo::LCD_width ||
@@ -45,9 +45,9 @@ void			SortSprites::updateCharacters(int x, int y)
 		else
 		{
 			_toDraw[i].frame = SortSprites::characters[i]->frame();
-			_toDraw[i].pos.x = newX;
-			_toDraw[i].pos.y = newY;
-			_cube->sprites[_toDraw[i].idx].move(_toDraw[i].pos.x, _toDraw[i].pos.y);
+			_toDraw[i].x = newX;
+			_toDraw[i].y = newY;
+			_cube->sprites[_toDraw[i].idx].move(_toDraw[i].x, _toDraw[i].y);
 			_cube->sprites[_toDraw[i].idx].setImage(*(_toDraw[i].img), _toDraw[i].frame);
 		}
 	}
@@ -60,13 +60,27 @@ unsigned int	SortSprites::addSprite(unsigned int x,
 {
 	if (_spriteNbr >= MAX_SPRITES)
 		return 0;
-	_toDraw[_spriteNbr].pos.x = x;
-	_toDraw[_spriteNbr].pos.y = y;
+	LOG("gx = %d\ngy = %d\n------------\n", x, y);
+	_toDraw[_spriteNbr].x = x;
+	_toDraw[_spriteNbr].y = y;
 	_toDraw[_spriteNbr].frame = frame;
 	_toDraw[_spriteNbr].img = img;
 	_toDraw[_spriteNbr].idx = _spriteNbr;
 	++_spriteNbr;
 	return (_spriteNbr - 1);
+}
+
+void	SortSprites::swap(int i, int j)
+{
+	SSprite		*tmp;
+	int			tmp2;
+
+	tmp = _sorted[i];
+	_sorted[i] = _sorted[j];
+	_sorted[j] = tmp;
+	tmp2 = _sorted[i]->idx;
+	_sorted[i]->idx = _sorted[j]->idx;
+	_sorted[j]->idx = tmp2;
 }
 
 void	SortSprites::initSort()
@@ -77,22 +91,12 @@ void	SortSprites::initSort()
 		for (int j = i + 1; j < _spriteNbr; ++j)
 		{
 			if (*_sorted[i] < *_sorted[j])
-			{
-				SSprite		*tmp;
-
-				tmp = _sorted[i];
-				_sorted[i] = _sorted[j];
-				_sorted[j] = tmp;
-
-				int			tmp2;
-				tmp2 = _sorted[i]->idx;
-				_sorted[i]->idx = _sorted[j]->idx;
-				_sorted[j]->idx = tmp2;
-			}
+				swap(i, j);
 		}
 	for (int i = 0; i < _spriteNbr; ++i)
 	{
-		_cube->sprites[i].move(_sorted[i]->pos.x, _sorted[i]->pos.y);
+		LOG("x = %d\ny = %d\n------------\n", _sorted[i]->x, _sorted[i]->y);
+		_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
 		_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
 	}
 	for (unsigned int i = _spriteNbr; i < MAX_SPRITES; ++i)
@@ -106,20 +110,11 @@ void	SortSprites::flush()
 		{
 			if (*_sorted[i] < *_sorted[j])
 			{
-				SSprite		*tmp;
+				swap(i, j);
 
-				tmp = _sorted[i];
-				_sorted[i] = _sorted[j];
-				_sorted[j] = tmp;
-
-				int			tmp2;
-				tmp2 = _sorted[i]->idx;
-				_sorted[i]->idx = _sorted[j]->idx;
-				_sorted[j]->idx = tmp2;
-
-				_cube->sprites[i].move(_sorted[i]->pos.x, _sorted[i]->pos.y);
+				_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
 				_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
-				_cube->sprites[j].move(_sorted[j]->pos.x, _sorted[j]->pos.y);
+				_cube->sprites[j].move(_sorted[j]->x, _sorted[j]->y);
 				_cube->sprites[j].setImage(*(_sorted[j]->img), _sorted[j]->frame);
 			}
 		}
