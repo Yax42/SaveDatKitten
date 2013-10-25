@@ -50,25 +50,21 @@ bool	Player::clampPosition()
     if (_x < 0)
     {
 		_x = 0;
-		_xOld = _x + 1;
 		change = true;
     }
     else if (_x >= Map::size)
     {
 		_x = Map::size - 1;
-		_xOld = _x - 1;
 		change = true;
     }
     if (_y < 0)
     {
 		_y = 0;
-		_yOld = _y + 1;
 		change = true;
     }
     else if (_y >= Map::size)
     {
 		_y = Map::size - 1;
-		_yOld = _y - 1;
 		change = true;
     }
     return (change);
@@ -83,28 +79,24 @@ void		Player::swapCubes()
 
 void		Player::move(int dir)
 {
+	int		xOld = _x;
+	int		yOld = _y;
+	
     if (dir == EDirection::LEFT)
-	{
-		_xOld = _x;
 		_x++;
-	}
     if (dir == EDirection::TOP)
-	{
-		_yOld = _y;
 		_y++;
-	}
     if (dir == EDirection::RIGHT)
-	{
-		_xOld = _x;
 		_x--;
-	}
     if (dir == EDirection::BOT)
-	{
-		_yOld = _y;
 		_y--;
-	}
     if (clampPosition() == false)
-	swapCubes();
+	{
+		_yOld = yOld;
+		_xOld = xOld;
+		swapCubes();
+	}
+
 }
 
 void					Player::flush()
