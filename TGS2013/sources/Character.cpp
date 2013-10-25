@@ -13,8 +13,15 @@ void					Character::update(float delta)
 {
 	if (_goalAlive == false)
 	{
-		_spriteId = 1;
-		return ;
+		Sifteo::Random				random;
+		random.seed();
+		if (static_cast<unsigned int>(random.random() * 100))
+		{
+			_spriteId = 1;
+			return ;
+		}
+		else
+			setGoal(static_cast<int>(_goal.x / Sifteo::LCD_height), static_cast<int>(_goal.y / Sifteo::LCD_width));
 	}
 	Sifteo::Float2		prevDir = _goal - _pos;
 	Sifteo::Float2		velocity = (prevDir).normalize() * delta * _maxSpeed;
@@ -59,7 +66,12 @@ void				Character::print(SortSprites &sprites, unsigned int x, unsigned int y)
 
 void			Character::setGoal(float x, float y)
 {
-	_goal.set(x, y);
+	Sifteo::Random				random;
+	random.seed();
+
+	LOG("%f %f\n", x, y);
+	_goal.set(x * Sifteo::LCD_width + 32 + static_cast<unsigned int>(random.random() * 32),
+				y * Sifteo::LCD_height + static_cast<unsigned int>(random.random() * 96));
 	_goalAlive = true;
 }
 
