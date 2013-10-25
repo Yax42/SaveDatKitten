@@ -2,8 +2,16 @@
 #include "Map.hh"
 #include "assets.gen.h"
 
-Player::Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube, int id) : _x(x), _y(y), _xOld(x), _yOld(y),
-	_mainCube(mainCube), _sideCube(sideCube), _char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 100)
+Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, Sifteo::VideoBuffer *sideCube, int id) :
+	_x(x),
+	_y(y),
+	_xOld(x),
+	_yOld(y),
+	_mainCubeInstance(mainCube),
+	_sideCubeInstance(sideCube),
+	_mainCube(&_mainCubeInstance),
+	_sideCube(&_sideCubeInstance),
+	_char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 100)
 {
 	SortSprites::characters[id] = &_char;
     clampPosition();
@@ -18,12 +26,12 @@ void		Player::connection(Sifteo::VideoBuffer *cube1, unsigned int side1, Sifteo:
 	Sifteo::Random				random;
 	random.seed();
 
-	if (cube1 == _mainCube.cube() && cube2 == _sideCube.cube())
+	if (cube1 == _mainCube->cube() && cube2 == _sideCube->cube())
 	{
 		mainSide = side1;
 		sideSide = side2;
 	}
-	else if (cube2 == _mainCube.cube() && cube1 == _sideCube.cube())
+	else if (cube2 == _mainCube->cube() && cube1 == _sideCube->cube())
 	{
 		mainSide = side2;
 		sideSide = side1;
@@ -71,7 +79,7 @@ bool	Player::clampPosition()
 
 void		Player::swapCubes()
 {
-    PlayerCube		tmp = _mainCube;
+    PlayerCube		*tmp = _mainCube;
     _mainCube = _sideCube;
     _sideCube = tmp;
 }
@@ -104,14 +112,14 @@ void		Player::move(int dir)
 
 void					Player::flush()
 {
-	_sideCube.drawer().updateCharacters(_x, _y);
-    _mainCube.drawer().flush();
-	_sideCube.drawer().updateCharacters(_xOld, _yOld);
-    _sideCube.drawer().flush();
+	_sideCube->drawer().updateCharacters(_x, _y);
+    _mainCube->drawer().flush();
+	_sideCube->drawer().updateCharacters(_xOld, _yOld);
+    _sideCube->drawer().flush();
 }
 
 void					Player::updateChar()
 {
-    _mainCube.drawer().setCharacters();
-    _sideCube.drawer().setCharacters();
+    _mainCube->drawer().setCharacters();
+    _sideCube->drawer().setCharacters();
 }

@@ -3,7 +3,7 @@
 #include "assets.gen.h"
 
 SaveKittens::SaveKittens() :
-	_player(0, 0, &_cubes[0], &_cubes[1], 0)
+	_player(0, 0, _cubes, _cubes + 1, 0)
 {
 	_map.genMap();
 }

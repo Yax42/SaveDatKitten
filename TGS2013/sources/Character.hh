@@ -19,7 +19,6 @@ public:
 	int								x() { return (static_cast<int>(_pos.x)); }
 	int								y() { return (static_cast<int>(_pos.y)); }
 
-
 private:
 	const Sifteo::PinnedAssetImage	&_image;
 	Sifteo::Float2					_pos;
