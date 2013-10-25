@@ -15,6 +15,7 @@ public:
 		Sifteo::Int2 					pos;
 		unsigned char 					frame;
 		Sifteo::PinnedAssetImage const	*img;
+		int								idx;
 
 		SSprite() { }
 
@@ -30,7 +31,6 @@ private:
 	SSprite						_toDraw[MAX_SPRITES];
 	SSprite						*_sorted[MAX_SPRITES];
 	unsigned int				_spriteNbr;
-
 
 public:
 	SortSprites(Sifteo::VideoBuffer &buffer);
