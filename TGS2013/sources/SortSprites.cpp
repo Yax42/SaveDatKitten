@@ -2,7 +2,7 @@
 #include "assets.gen.h"
 
 
-Character	*SortSprites::characters[] = { NULL, NULL, NULL };
+Character	*SortSprites::characters[] = { NULL};//, NULL, NULL };
 
 SortSprites::SortSprites(Sifteo::VideoBuffer &buffer) :
 	_cube(&buffer),
@@ -18,22 +18,35 @@ SortSprites::~SortSprites()
 
 void			SortSprites::setCharacters()
 {
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < NB_CHARS; ++i)
 	{
 		_toDraw[i].img = SortSprites::characters[i]->image();
 		++_spriteNbr;
 	}
 }
 
-void			SortSprites::updateCharacters()
+void			SortSprites::updateCharacters(int x, int y)
 {
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < NB_CHARS; ++i)
 	{
-		_toDraw[i].frame = SortSprites::characters[i]->frame();
-		_toDraw[i].pos.x = SortSprites::characters[i]->x();
-		_toDraw[i].pos.y = SortSprites::characters[i]->y();
-		_cube->sprites[i].move(_toDraw[i].pos.x, _toDraw[i].pos.y);
-		_cube->sprites[i].setImage(*(_toDraw[i].img), _toDraw[i].frame);
+		int			newX = SortSprites::characters[i]->x() - x;
+		int			newY = SortSprites::characters[i]->y() - y;
+
+		if ( newX < -32 ||
+			newX > Sifteo::LCD_width ||
+			newY < -32 ||
+			newY > Sifteo::LCD_height)
+		{
+			_cube->sprites[i].setImage(Plants, 35);
+		}
+		else
+		{
+			_toDraw[i].frame = SortSprites::characters[i]->frame();
+			_toDraw[i].pos.x = newX;
+			_toDraw[i].pos.y = newY;
+			_cube->sprites[i].move(_toDraw[i].pos.x, _toDraw[i].pos.y);
+			_cube->sprites[i].setImage(*(_toDraw[i].img), _toDraw[i].frame);
+		}
 	}
 }
 
@@ -79,7 +92,6 @@ void	SortSprites::initSort()
 
 void	SortSprites::flush()
 {
-	updateCharacters();
 	return ;
 	for (int i = 0; i < _spriteNbr; ++i)
 		for (int j = i + 1; j < _spriteNbr; ++j)
@@ -100,7 +112,7 @@ void	SortSprites::flush()
 		}
 }
 
-void	SortSprites::clean(unsigned int keep)
+void	SortSprites::clean()
 {
-	_spriteNbr = keep;
+	_spriteNbr = NB_CHARS;
 }

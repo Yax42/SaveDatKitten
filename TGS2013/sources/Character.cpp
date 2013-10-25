@@ -17,7 +17,7 @@ void					Character::update(float delta)
 		return ;
 	}
 	Sifteo::Float2		prevDir = _goal - _pos;
-	Sifteo::Float2		velocity = (prevDir).normalize(); //delta * _maxSpeed;
+	Sifteo::Float2		velocity = (prevDir).normalize() * delta * _maxSpeed;
 	_pos += velocity;
 //	LOG("TATATEOTOTYAAAYA %f\n", _pos.x);
 	Sifteo::Float2		dir = (_goal - _pos).normalize();

@@ -33,7 +33,7 @@ void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned s
 {
 	_player.connection(&_cubes[firstID], firstSide, &_cubes[secondID], secondSide);
 
-	_player.drawer().clean(1);
+	_player.drawer().clean();
 	_map.printCase(_player);
 	_player.drawer().initSort();
 

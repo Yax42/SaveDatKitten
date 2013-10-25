@@ -3,7 +3,7 @@
 #include "assets.gen.h"
 
 Player::Player(int x, int y, PlayerCube mainCube, PlayerCube sideCube, int id) : _x(x), _y(y), _xOld(x), _yOld(y),
-	_mainCube(mainCube), _sideCube(sideCube), _char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 5)
+	_mainCube(mainCube), _sideCube(sideCube), _char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 100)
 {
 	SortSprites::characters[id] = &_char;
     clampPosition();
@@ -104,7 +104,9 @@ void		Player::move(int dir)
 
 void					Player::flush()
 {
+	_sideCube.drawer().updateCharacters(_x, _y);
     _mainCube.drawer().flush();
+	_sideCube.drawer().updateCharacters(_xOld, _yOld);
     _sideCube.drawer().flush();
 }
 

@@ -5,6 +5,7 @@
 #include "Character.hh"
 
 #define	MAX_SPRITES		8
+#define NB_CHARS		1
 
 class	SortSprites
 {
@@ -22,7 +23,7 @@ public:
 		bool		operator>(SSprite const &oth) { return (pos.y > oth.pos.y); }
 	};
 
-	static Character			*characters[3];
+	static Character			*characters[NB_CHARS];
 
 private:
 	Sifteo::VideoBuffer			*_cube;
@@ -36,11 +37,11 @@ public:
 	~SortSprites();
 
 	void			setCharacters();
-	void			updateCharacters();
+	void			updateCharacters(int x, int y);
 	SSprite			&getById(unsigned int id) { return (_toDraw[id]); }
 	unsigned int	addSprite(unsigned int x, unsigned int y, unsigned int frame, Sifteo::PinnedAssetImage const *img);
 	void			initSort();
 	void			flush();
 
-	void			clean(unsigned int keep = 3);
+	void			clean();
 };
