@@ -2,6 +2,8 @@
 #include "Map.hh"
 #include "assets.gen.h"
 
+#include "Random.hh"
+
 Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, Sifteo::VideoBuffer *sideCube, int id) :
 	_x(x),
 	_y(y),
@@ -11,7 +13,7 @@ Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, Sifteo::VideoBuffer 
 	_sideCubeInstance(sideCube),
 	_mainCube(&_mainCubeInstance),
 	_sideCube(&_sideCubeInstance),
-	_char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 100)
+	_char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 150)
 {
 	SortSprites::characters[id] = &_char;
     clampPosition();

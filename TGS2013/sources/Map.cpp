@@ -1,6 +1,8 @@
 #include "Map.hh"
 #include "assets.gen.h"
 
+#include "Random.hh"
+
 const unsigned int	Map::size = MAP_SIZE;
 
 Map::Map()
@@ -24,17 +26,16 @@ bool Map::getNearestTree(unsigned int curIdx, unsigned int x, unsigned int y, un
 	return (false);
 }
 
-void Map::chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &random)
+void Map::chooseTreePositions(unsigned int x, unsigned int y)
 {
 	unsigned int 	len;
 
 	for (unsigned int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
-		random.seed();
 		do
 		{
-			_map[y * MAP_SIZE + x].plants[i].pos.x = random.raw() % SCREEN_SIZE - TILE_SIZE / 2;
-			_map[y * MAP_SIZE + x].plants[i].pos.y = random.raw() % SCREEN_SIZE - TILE_SIZE / 3;
+			_map[y * MAP_SIZE + x].plants[i].pos.x = gRandom.raw() % SCREEN_SIZE - TILE_SIZE / 2;
+			_map[y * MAP_SIZE + x].plants[i].pos.y = gRandom.raw() % SCREEN_SIZE - TILE_SIZE / 3;
 			if (x == 0 && _map[y * MAP_SIZE + x].plants[i].pos.x < WALL_THICK)
 				_map[y * MAP_SIZE + x].plants[i].pos.x = WALL_THICK;
 			else if (x == MAP_SIZE - 1 && _map[y * MAP_SIZE + x].plants[i].pos.x > SCREEN_SIZE - WALL_THICK - TILE_SIZE)
@@ -46,24 +47,22 @@ void Map::chooseTreePositions(unsigned int x, unsigned int y, Sifteo::Random &ra
 		} while (getNearestTree(i, x, y, 30));
 		// choose tile for zone
 		if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
-			_map[y * MAP_SIZE + x].plants[i].frame = random.raw() % 10;
+			_map[y * MAP_SIZE + x].plants[i].frame = gRandom.raw() % 10;
 		else if (_map[y * MAP_SIZE + x].type == ZONE_ROCK)
-			_map[y * MAP_SIZE + x].plants[i].frame = 10 + random.raw() % 10;
+			_map[y * MAP_SIZE + x].plants[i].frame = 10 + gRandom.raw() % 10;
 		else if (_map[y * MAP_SIZE + x].type == ZONE_SAND)
-			_map[y * MAP_SIZE + x].plants[i].frame = 20 + random.raw() % 10;
+			_map[y * MAP_SIZE + x].plants[i].frame = 20 + gRandom.raw() % 10;
 	}
 }
 
 void Map::genMap()
 {
 	SZone						zones[ZONE_NBR];
-	Sifteo::Random				random;
 
-	random.seed();
 	for (unsigned int i = 0; i < ZONE_NBR; ++i)
 	{
-		zones[i].posX = random.raw() % MAP_SIZE;
-		zones[i].posY = random.raw() % MAP_SIZE;
+		zones[i].posX = gRandom.raw() % MAP_SIZE;
+		zones[i].posY = gRandom.raw() % MAP_SIZE;
 		zones[i].type = static_cast<EZoneType>(i % 3);
 	}
 	for (unsigned int y = 0; y < MAP_SIZE; ++y)
@@ -72,8 +71,8 @@ void Map::genMap()
 		for (unsigned int x = 0; x < MAP_SIZE; ++x)
 		{
 			_map[y * MAP_SIZE + x].type = checkZone(zones, x, y);
-			_map[y * MAP_SIZE + x].plantNbr = random.raw() % MAX_PLANT_NBR;
-			chooseTreePositions(x, y, random);
+			_map[y * MAP_SIZE + x].plantNbr = gRandom.raw() % MAX_PLANT_NBR;
+			chooseTreePositions(x, y);
 			if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
 				LOG("G");
 			else if (_map[y * MAP_SIZE + x].type == ZONE_SAND)
@@ -122,6 +121,8 @@ void Map::printCase(Player &player) const
 	LOG("Tree nbr = %d\n", _map[y * MAP_SIZE + x].plantNbr);
 	for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
+		LOG("add tree #%d\n", i);
+		LOG("at pos %d, %d\n", _map[y * MAP_SIZE + x].plants[i].pos.x, _map[y * MAP_SIZE + x].plants[i].pos.y);
 		player.drawer().addSprite(_map[y * MAP_SIZE + x].plants[i].pos.x,
 						 _map[y * MAP_SIZE + x].plants[i].pos.y,
 						 _map[y * MAP_SIZE + x].plants[i].frame,

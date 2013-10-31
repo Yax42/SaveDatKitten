@@ -21,7 +21,6 @@ void			SortSprites::setCharacters()
 	for (int i = 0; i < NB_CHARS; ++i)
 	{
 		_toDraw[i].img = SortSprites::characters[i]->image();
-		_toDraw[i].idx = i;
 		++_spriteNbr;
 	}
 }
@@ -56,34 +55,40 @@ unsigned int	SortSprites::addSprite(unsigned int x,
 							   unsigned int frame,
 							   Sifteo::PinnedAssetImage const *img)
 {
+	LOG("_spriteNbr = %d\n", _spriteNbr);
 	if (_spriteNbr >= MAX_SPRITES)
 		return 0;
-	//	LOG("gx = %d\ngy = %d\n------------\n", x, y);
 	_toDraw[_spriteNbr].x = x;
 	_toDraw[_spriteNbr].y = y;
 	_toDraw[_spriteNbr].frame = frame;
 	_toDraw[_spriteNbr].img = img;
 	_toDraw[_spriteNbr].idx = _spriteNbr;
-	return (_spriteNbr++);
+	LOG("SPRITE ADDED #%d\n", ++_spriteNbr);
+	return (_spriteNbr);
 }
 
 void	SortSprites::swap(int i, int j)
 {
 	SSprite		*tmp;
-	int			tmp2;
+//	int			tmp2;
 
 	tmp = _sorted[i];
 	_sorted[i] = _sorted[j];
 	_sorted[j] = tmp;
-	tmp2 = _sorted[i]->idx;
-	_sorted[i]->idx = _sorted[j]->idx;
-	_sorted[j]->idx = tmp2;
+//	tmp2 = _sorted[i]->idx;
+	_sorted[i]->idx = i;
+	_sorted[j]->idx = j;
 }
 
 void	SortSprites::initSort()
 {
+	LOG("INIT SORT:\n");
+	LOG("Sprite Nbr = %d\n", _spriteNbr);
 	for (int i = 0; i < _spriteNbr; ++i)
+	{
+		_toDraw[i].idx = i;
 		_sorted[i] = &_toDraw[i];
+	}
 	for (int i = 0; i < _spriteNbr; ++i)
 	{
 		for (int j = i + 1; j < _spriteNbr; ++j)
@@ -92,9 +97,10 @@ void	SortSprites::initSort()
 				swap(i, j);
 		}
 	}
+	LOG("Order:\n");
 	for (int i = 0; i < _spriteNbr; ++i)
 	{
-//		LOG("x = %d\ny = %d\n------------\n", _sorted[i]->x, _sorted[i]->y);
+		LOG("- %d, %d\n", _sorted[i]->idx, _toDraw[i].idx);
 		_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
 		_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
 	}
@@ -112,13 +118,22 @@ void	SortSprites::flush()
 			{
 				swap(i, j);
 
-				_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
-				_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
-				_cube->sprites[j].move(_sorted[j]->x, _sorted[j]->y);
-				_cube->sprites[j].setImage(*(_sorted[j]->img), _sorted[j]->frame);
+//				_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
+//				_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
+//				_cube->sprites[j].move(_sorted[j]->x, _sorted[j]->y);
+//				_cube->sprites[j].setImage(*(_sorted[j]->img), _sorted[j]->frame);
 			}
 		}
 	}
+//	LOG("Order:\n");
+	for (int i = 0; i < _spriteNbr; ++i)
+	{
+//		LOG("- %d\n", _sorted[i]->idx);
+//		LOG("i = %d\n", i);
+		_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
+		_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
+	}
+//	LOG("-----------------\n");
 }
 
 void	SortSprites::clean()

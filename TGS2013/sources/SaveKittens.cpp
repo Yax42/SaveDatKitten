@@ -2,6 +2,8 @@
 #include "SaveKittens.hh"
 #include "assets.gen.h"
 
+#include "Random.hh"
+
 SaveKittens::SaveKittens() :
 	_player(0, 0, _cubes, _cubes + 1, 0)
 {

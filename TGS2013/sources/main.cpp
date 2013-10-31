@@ -16,11 +16,14 @@ static Sifteo::Metadata M = Sifteo::Metadata()
     .icon(Icon)
     .cubeRange(gNumCubes);
 
+Sifteo::Random			gRandom;
+
 void main()
 {
 	static SaveKittens	kittens;
     Sifteo::TimeStep ts;
 
+	gRandom.seed(42);
     kittens.init();
     while (1)
 	{

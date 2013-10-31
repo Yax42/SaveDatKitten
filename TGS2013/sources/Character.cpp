@@ -2,6 +2,8 @@
 #include "Player.hh"
 #include "SortSprites.hh"
 
+#include "Random.hh"
+
 Character::Character(const Sifteo::PinnedAssetImage & image, float x, float y, float maxSpeed) :
 	_image(image), _pos(), _goal(), _goalAlive(false), _maxSpeed(maxSpeed)
 {
@@ -13,9 +15,7 @@ void					Character::update(float delta)
 {
 	if (_goalAlive == false)
 	{
-		Sifteo::Random				random;
-		random.seed();
-		if (static_cast<unsigned int>(random.random() * 100))
+		if (static_cast<unsigned int>(gRandom.random() * 2))
 		{
 			_spriteId = 1;
 			return ;
@@ -66,12 +66,8 @@ void				Character::print(SortSprites &sprites, unsigned int x, unsigned int y)
 
 void			Character::setGoal(float x, float y)
 {
-	Sifteo::Random				random;
-	random.seed();
-
-	LOG("%f %f\n", x, y);
-	_goal.set(x * Sifteo::LCD_width + 32 + static_cast<unsigned int>(random.random() * 32),
-				y * Sifteo::LCD_height + static_cast<unsigned int>(random.random() * 96));
+	_goal.set(x * Sifteo::LCD_width + 32 + static_cast<unsigned int>(gRandom.random() * 32),
+				y * Sifteo::LCD_height + static_cast<unsigned int>(gRandom.random() * 96));
 	_goalAlive = true;
 }
 
