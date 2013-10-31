@@ -12,7 +12,7 @@ public:
 	~Character() {}
 	void							update(float delta);
 	void							print(SortSprites &sprites, unsigned int x, unsigned int y);
-	void							setGoal(float x, float y);
+	void							setGoal(float x, float y, float speed = -1);
 	bool							goalAlive() const;
 	int								frame() { return (_spriteId); }
 	const Sifteo::PinnedAssetImage	*image() { return (&_image); }
@@ -25,5 +25,6 @@ private:
 	Sifteo::Float2					_goal;
 	bool							_goalAlive;
 	float							_maxSpeed;
+	float							_speed;
 	int								_spriteId;
 };

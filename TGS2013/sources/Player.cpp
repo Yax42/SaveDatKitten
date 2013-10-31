@@ -7,8 +7,8 @@
 Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, Sifteo::VideoBuffer *sideCube, int id) :
 	_x(x),
 	_y(y),
-	_xOld(x),
-	_yOld(y),
+	_xOld(-1),
+	_yOld(-1),
 	_mainCubeInstance(mainCube),
 	_sideCubeInstance(sideCube),
 	_mainCube(&_mainCubeInstance),

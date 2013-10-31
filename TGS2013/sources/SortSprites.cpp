@@ -33,10 +33,11 @@ void			SortSprites::updateCharacters(int x, int y)
 		int			newY = SortSprites::characters[i]->y() - y * Sifteo::LCD_height;
 
 		if ( newX < -32 ||
-			newX > Sifteo::LCD_width ||
+			newX > (int) Sifteo::LCD_width ||
 			newY < -32 ||
-			newY > Sifteo::LCD_height)
+			newY > (int) Sifteo::LCD_height)
 		{
+			_cube->sprites[_toDraw[i].idx].move(128, 128);
 			_cube->sprites[_toDraw[i].idx].setImage(Plants, 35);
 		}
 		else
