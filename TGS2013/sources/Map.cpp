@@ -115,9 +115,10 @@ bool Map::isInTab(unsigned char *tab, unsigned char size, unsigned char value) c
 
 void Map::printCase(Player &player) const
 {
-	unsigned int	x = static_cast<unsigned int>(player.x());
-	unsigned int	y = static_cast<unsigned int>(player.y());
-
+	unsigned int				x = static_cast<unsigned int>(player.x());
+	unsigned int				y = static_cast<unsigned int>(player.y());
+	Sifteo::AssetImage const 	*image;
+	
 	LOG("Tree nbr = %d\n", _map[y * MAP_SIZE + x].plantNbr);
 	for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
@@ -128,7 +129,13 @@ void Map::printCase(Player &player) const
 						 _map[y * MAP_SIZE + x].plants[i].frame,
 						 &Plants);
 	}
-	player.cube().bg0.image(Sifteo::vec(0, 0), GroundTiles, _map[y * MAP_SIZE + x].type);
+	if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
+		image = &GrassTile;
+	else if (_map[y * MAP_SIZE + x].type == ZONE_SAND)
+		image = &SandTile;
+	else if (_map[y * MAP_SIZE + x].type == ZONE_ROCK)
+		image = &RockTile;
+	player.cube().bg0.image(Sifteo::vec(0, 0), *image);
 	if (x == 0)
 		player.cube().bg0.image(Sifteo::vec(0, 0), VerticalWall);
 	else if (x == MAP_SIZE - 1)

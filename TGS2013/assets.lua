@@ -1,14 +1,14 @@
-IconAssets = group{quality=10}
+IconAssets = group{quality=9}
 Icon = image{"resources/icon.png"}
 
-GameAssets = group{}
-GroundTiles = image{"resources/tiles.png", pinned=true, width=128, height=128, quality=0}
-Pikachu = image{"resources/pikachu.png", pinned=true, width=32, height=32, quality=1}
-Plants = image{"resources/plants.png", pinned=true, width=64, height=64, quality=1}
-VerticalWall = image{"resources/sideWall.png", quality=1}
-HorizontalWall = image{"resources/topWall.png", quality=1}
-BlackTile = image{"resources/black.png", quality=1}
-IsHere = image{"resources/isHere.png", quality=1}
-
-CatAssets = group{}
+GameAssets = group{quality=9}
+RockTile = image{"resources/rock.png"}
+SandTile = image{"resources/sand.png"}
+GrassTile = image{"resources/grass.png"}
+Pikachu = image{"resources/pikachu.png", pinned=true, width=32, height=32}
+Plants = image{"resources/plants.png", pinned=true, width=64, height=64}
+VerticalWall = image{"resources/sideWall.png"}
+HorizontalWall = image{"resources/topWall.png"}
+BlackTile = image{"resources/black.png"}
+IsHere = image{"resources/isHere.png"}
 Cat = image{"resources/cat.png", pinned=true, width=32, height=32}
