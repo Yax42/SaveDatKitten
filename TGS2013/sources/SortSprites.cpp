@@ -119,22 +119,13 @@ void	SortSprites::flush()
 			{
 				swap(i, j);
 
-//				_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
-//				_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
-//				_cube->sprites[j].move(_sorted[j]->x, _sorted[j]->y);
-//				_cube->sprites[j].setImage(*(_sorted[j]->img), _sorted[j]->frame);
+				_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
+				_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
+				_cube->sprites[j].move(_sorted[j]->x, _sorted[j]->y);
+				_cube->sprites[j].setImage(*(_sorted[j]->img), _sorted[j]->frame);
 			}
 		}
 	}
-//	LOG("Order:\n");
-	for (int i = 0; i < _spriteNbr; ++i)
-	{
-//		LOG("- %d\n", _sorted[i]->idx);
-//		LOG("i = %d\n", i);
-		_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
-		_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
-	}
-//	LOG("-----------------\n");
 }
 
 void	SortSprites::clean()
