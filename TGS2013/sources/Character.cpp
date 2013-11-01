@@ -37,19 +37,15 @@ void					Character::update(float delta)
 		return ;
 	}
 
-	int		x = (dir.x < 0.45f && dir.x > -0.3f) ? 0 :
-				(dir.x > 0.3f) ? -1 : 1;
+	int		x = (dir.x < 0.5f && dir.x > -0.5f) ? 0 :
+				(dir.x > 0.5f) ? -1 : 1;
 
-	int		y = (dir.y < 0.3f && dir.y > -0.3f) ? 0 :
-				(dir.y > 0.3f) ? -1 : 1;
+	int		y = (dir.y < 0.5f && dir.y > -0.5f) ? 0 :
+				(dir.y > 0.5f) ? -1 : 1;
 
-	int		add = (x == 0 && y == -1)	? 0 :
-				(x == 1 && y == -1)		? 7 :
-				(x == 1 && y == 0)		? 6 :
-				(x == 1 && y == 1)		? 5 :
-				(x == 0 && y == 1)		? 4 :
-				(x == -1 && y == 1)		? 3 :
-				(x == -1 && y == 0)		? 2 : 1;
+	int		add = (dir.x > 0.5f) ? 1 :
+				(dir.y < -0.5f) ? 2 :
+				(dir.x < -0.5f) ? 3 : 0;
 
 	_spriteId = ((_spriteId + 1) % 4) + add * 4;
 }
