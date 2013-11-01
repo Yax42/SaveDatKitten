@@ -15,7 +15,6 @@ Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, Sifteo::VideoBuffer 
 	_sideCube(&_sideCubeInstance),
 	_char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 150)
 {
-	SortSprites::characters[id] = &_char;
     clampPosition();
 }
 

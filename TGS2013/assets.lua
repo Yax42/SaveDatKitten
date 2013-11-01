@@ -9,3 +9,6 @@ VerticalWall = image{"resources/sideWall.png"}
 HorizontalWall = image{"resources/topWall.png"}
 BlackTile = image{"resources/black.png"}
 IsHere = image{"resources/isHere.png"}
+
+CatAssets = group{}
+Cat = image{"resources/cat.png", pinned=true, width=32, height=32}

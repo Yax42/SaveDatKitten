@@ -5,7 +5,7 @@
 #include "Character.hh"
 
 #define	MAX_SPRITES		8
-#define NB_CHARS		1
+#define NB_CHARS		2
 
 class	SortSprites
 {
@@ -45,6 +45,7 @@ public:
 	unsigned int	addSprite(unsigned int x, unsigned int y, unsigned int frame, Sifteo::PinnedAssetImage const *img);
 	void			initSort();
 	void			flush();
+	static void		addChar(Character *c);
 
 	void			clean();
 };

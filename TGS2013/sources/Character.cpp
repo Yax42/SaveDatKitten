@@ -7,6 +7,7 @@
 Character::Character(const Sifteo::PinnedAssetImage & image, float x, float y, float maxSpeed) :
 	_image(image), _pos(), _goal(), _goalAlive(false), _maxSpeed(maxSpeed), _speed(0)
 {
+	SortSprites::addChar(this);
 	_pos.set(x, y);
 	_goal.set(0, 0);
 }

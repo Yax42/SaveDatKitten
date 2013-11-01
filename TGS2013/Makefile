@@ -2,7 +2,7 @@ APP = SaveTheKitten
 
 include $(SDK_DIR)/Makefile.defs
 
-OBJS = $(ASSETS).gen.o sources/Map.o sources/Player.o sources/SaveKittens.o sources/main.o sources/Character.o sources/SortSprites.o sources/PlayerCube.o
+OBJS = $(ASSETS).gen.o sources/Map.o sources/Player.o sources/SaveKittens.o sources/main.o sources/Character.o sources/SortSprites.o sources/PlayerCube.o sources/Kitty.o
 ASSETDEPS += resources/*.png $(ASSETS).lua
 
 # build assets.html to proof stir-processed assets.

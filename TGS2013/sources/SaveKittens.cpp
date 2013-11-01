@@ -30,6 +30,7 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 {
 	_player.update(dt);
 	_player.flush();
+	_kitty.update(dt);
 }
 
 void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned secondID, unsigned secondSide)

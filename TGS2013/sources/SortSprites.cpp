@@ -2,7 +2,7 @@
 #include "assets.gen.h"
 
 
-Character	*SortSprites::characters[] = { NULL};//, NULL, NULL };
+Character	*SortSprites::characters[] = { NULL, NULL};//, NULL };
 
 SortSprites::SortSprites(Sifteo::VideoBuffer &buffer) :
 	_cube(&buffer),
@@ -140,4 +140,10 @@ void	SortSprites::flush()
 void	SortSprites::clean()
 {
 	_spriteNbr = NB_CHARS;
+}
+
+void		SortSprites::addChar(Character *c)
+{
+	static int id = 0;
+	characters[id++] = c;
 }
