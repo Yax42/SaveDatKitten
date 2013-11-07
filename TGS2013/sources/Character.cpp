@@ -64,8 +64,8 @@ void				Character::print(SortSprites &sprites, unsigned int x, unsigned int y)
 
 void			Character::setGoal(float x, float y, float speed)
 {
-	_goal.set(x * Sifteo::LCD_width + 32 + static_cast<unsigned int>(gRandom.random() * 32),
-				y * Sifteo::LCD_height + static_cast<unsigned int>(gRandom.random() * 96));
+	_goal.set(x * Sifteo::LCD_width + 16 + static_cast<unsigned int>(gRandom.random() * 64),
+				y * Sifteo::LCD_height + 16 + static_cast<unsigned int>(gRandom.random() * 64));
 	_goalAlive = true;
 	if (speed < 0)
 		speed = _maxSpeed;

@@ -38,7 +38,7 @@ void			SortSprites::updateCharacters(int x, int y)
 			newY > (int) Sifteo::LCD_height)
 		{
 			_cube->sprites[_toDraw[i].idx].move(128, 128);
-			_cube->sprites[_toDraw[i].idx].setImage(Plants, 35);
+			_cube->sprites[_toDraw[i].idx].setImage(Empty, 0);
 		}
 		else
 		{
@@ -106,7 +106,7 @@ void	SortSprites::initSort()
 		_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
 	}
 	for (unsigned int i = _spriteNbr; i < MAX_SPRITES; ++i)
-		_cube->sprites[i].setImage(Plants, 35);
+		_cube->sprites[i].setImage(Empty, 0);
 }
 
 void	SortSprites::flush()
