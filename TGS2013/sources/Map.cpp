@@ -47,11 +47,11 @@ void Map::chooseTreePositions(unsigned int x, unsigned int y)
 		} while (getNearestTree(i, x, y, 30));
 		// choose tile for zone
 		if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
-			_map[y * MAP_SIZE + x].plants[i].frame = gRandom.raw() % 10;
+			_map[y * MAP_SIZE + x].plants[i].frame = gRandom.raw() % TREE_SPRITE_NBR;
 		else if (_map[y * MAP_SIZE + x].type == ZONE_ROCK)
-			_map[y * MAP_SIZE + x].plants[i].frame = 10 + gRandom.raw() % 10;
+			_map[y * MAP_SIZE + x].plants[i].frame = TREE_SPRITE_NBR + gRandom.raw() % TREE_SPRITE_NBR;
 		else if (_map[y * MAP_SIZE + x].type == ZONE_SAND)
-			_map[y * MAP_SIZE + x].plants[i].frame = 20 + gRandom.raw() % 10;
+			_map[y * MAP_SIZE + x].plants[i].frame = 2 * TREE_SPRITE_NBR + gRandom.raw() % TREE_SPRITE_NBR;
 	}
 }
 

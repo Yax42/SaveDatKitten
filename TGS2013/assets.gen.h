@@ -6,16 +6,17 @@
 
 #pragma once
 
-extern Sifteo::AssetGroup GameAssets;
-extern const Sifteo::AssetImage RockTile;
-extern const Sifteo::AssetImage GrassTile;
-extern const Sifteo::PinnedAssetImage Pikachu;
-extern const Sifteo::PinnedAssetImage Plants;
-extern const Sifteo::PinnedAssetImage Cat;
-extern const Sifteo::AssetImage SandTile;
-extern const Sifteo::AssetImage IsHere;
-extern const Sifteo::AssetImage HorizontalWall;
-extern const Sifteo::AssetImage BlackTile;
-extern const Sifteo::AssetImage VerticalWall;
 extern Sifteo::AssetGroup IconAssets;
 extern const Sifteo::AssetImage Icon;
+extern Sifteo::AssetGroup GameAssets;
+extern const Sifteo::AssetImage RockTile;
+extern const Sifteo::PinnedAssetImage Pikachu;
+extern const Sifteo::PinnedAssetImage Plants;
+extern const Sifteo::AssetImage SandTile;
+extern const Sifteo::AssetImage GrassTile;
+extern const Sifteo::PinnedAssetImage Cat;
+extern const Sifteo::AssetImage HorizontalWall;
+extern const Sifteo::AssetImage BlackTile;
+extern const Sifteo::AssetImage IsHere;
+extern const Sifteo::AssetImage VerticalWall;
+extern const Sifteo::PinnedAssetImage Empty;

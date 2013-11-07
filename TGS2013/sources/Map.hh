@@ -8,10 +8,11 @@
 #define	MAP_SIZE		16
 #define	ZONE_NBR		16
 #define TILE_SIZE 		64
-#define WALL_THICK 		32
+#define WALL_THICK 		16
 #define SCREEN_SIZE 	128
 #define MAX_PLANT_NBR	4
 #define MAX_SPRITES 	8
+#define TREE_SPRITE_NBR	5
 
 #define ABS(x)	(((x) < 0) ? (-(x)) : (x))
 
