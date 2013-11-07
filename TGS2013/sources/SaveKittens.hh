@@ -6,17 +6,28 @@
 #include "Player.hh"
 #include "SortSprites.hh"
 #include "Kitty.hh"
+#include "Duel.hh"
 
 static const unsigned int gNumCubes = 3;
 
 class SaveKittens
 {
+public:
+	enum 	EGameMode
+	{
+		EXPLORATION,
+		DUEL
+	};
+
 private:   
 	Player				_player;
 	Kitty				_kitty;
     Sifteo::VideoBuffer _cubes[gNumCubes];
 	Map					_map;
 
+	EGameMode 			_mode;
+	Duel 				_duel;
+	
 public:
 	SaveKittens();
 	~SaveKittens() { }
@@ -24,4 +35,5 @@ public:
     void init();
 	void update(Sifteo::TimeDelta dt);
 	void onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned secondID, unsigned secondSide);
+	void onCubeMove(unsigned int value);
 };
