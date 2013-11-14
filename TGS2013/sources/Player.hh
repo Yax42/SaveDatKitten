@@ -14,6 +14,8 @@ namespace EDirection
 	};
 };
 
+class Kitty;
+
 class Player
 {
 public:
@@ -32,6 +34,8 @@ public:
 	void						updateChar();
 	void						flush();
 	void						print(SortSprites &sprites, unsigned int x, unsigned int y) { _char.print(sprites, x, y); }
+	void						follow(const Sifteo::PinnedAssetImage &image, const Character &target);
+	//void						updatePaw(Kitty &kitty);
 
 private:
     int				_x;
@@ -43,7 +47,10 @@ private:
     PlayerCube		*_mainCube;
     PlayerCube		*_sideCube;
 	Character		_char;
+public:
+	bool			shining;
 
+private:
     void	move(int dir);
     void	swapCubes();
     bool	clampPosition();
