@@ -5,7 +5,7 @@
 
 namespace EDirection
 {
-	enum
+	enum 	EDirection
 	{
 		BOT,
 		RIGHT,

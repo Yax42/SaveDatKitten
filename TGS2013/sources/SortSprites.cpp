@@ -21,6 +21,7 @@ void			SortSprites::setCharacters()
 	for (int i = 0; i < NB_CHARS; ++i)
 	{
 		_toDraw[i].img = SortSprites::characters[i]->image();
+		LOG("Set char\n");
 		++_spriteNbr;
 	}
 }
