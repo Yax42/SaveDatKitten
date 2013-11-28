@@ -1,6 +1,7 @@
 #include "Character.hh"
 #include "Player.hh"
 #include "SortSprites.hh"
+#include "Map.hh"
 
 #include "Random.hh"
 
@@ -22,9 +23,14 @@ void					Character::update(float delta)
 	Sifteo::Float2		dir;
 	if (_isDir)
 	{
+		Sifteo::Float2		prevPos = _pos;
 		Sifteo::Float2		velocity = (_dir).normalize() * delta * _speed;
 		_pos += velocity;
 		dir = (_dir).normalize();
+		if (_pos.x < 16 || _pos.x > MAP_SIZE * 128 - 16 - 32)
+			_pos.x = prevPos.x;
+		if (_pos.y < 16 - 32 || _pos.x > MAP_SIZE * 128 - 16 - 32)
+			_pos.x = prevPos.y;
 	}
 	else
 	{

@@ -11,7 +11,7 @@ Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, int id) :
 	_xOld(-1),
 	_yOld(-1),
 	_mainCube(mainCube),
-	_char(Toad, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 150),
+	_char((id == 0) ? Toad : Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 150),
 	shining(true)
 {
     clampPosition();
@@ -79,9 +79,22 @@ bool	Player::clampPosition()
     return (change);
 }
 
-void					Player::flush()
+void					Player::flush(Map &map)
 {
+	move();
 	_mainCube.drawer().updateCharacters(_x, _y);
+
+	int prevX = _x;
+	int prevY = _y;
+	_x = (_char.x() + 16) / 128;
+	_y = (_char.x() + 16) / 128;
+
+	if (_y != prevY || _x != prevX)
+	{
+		drawer().clean();
+		map.printCase(*this);
+		drawer().initSort();
+	}
     _mainCube.drawer().flush();
 }
 

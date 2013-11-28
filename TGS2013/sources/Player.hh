@@ -3,6 +3,7 @@
 #include "Character.hh"
 #include "PlayerCube.hh"
 
+class Map;
 namespace EDirection
 {
 	enum 	EDirection
@@ -31,22 +32,20 @@ public:
 	SortSprites					&drawer() { return (_mainCube.drawer()); }
 	void						update(float delta) { _char.update(delta); }
 	void						updateChar();
-	void						flush();
+	void						flush(Map &map);
 	void						print(SortSprites &sprites, unsigned int x, unsigned int y) { _char.print(sprites, x, y); }
 	void						follow(const Sifteo::PinnedAssetImage &image, const Character &target);
 	//void						updatePaw(Kitty &kitty);
 
-private:
+public:
     int				_x;
     int				_y;
     int				_xOld;
     int				_yOld;
     PlayerCube		_mainCube;
 	Character		_char;
-public:
 	bool			shining;
 
-private:
     //void	move(int dir);
     bool	clampPosition();
 };

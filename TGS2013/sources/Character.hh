@@ -23,7 +23,6 @@ public:
 
 	Sifteo::Float2					_dir;
 	bool							_isDir;
-private:
 	const Sifteo::PinnedAssetImage	&_image;
 	Sifteo::Float2					_pos;
 	Sifteo::Float2					_goal;

@@ -21,6 +21,7 @@ public:
 
 private:   
 	Player				_player;
+	Player				_player2;
 	Kitty				_kitty;
     Sifteo::VideoBuffer _cubes[gNumCubes];
 	Map					_map;
