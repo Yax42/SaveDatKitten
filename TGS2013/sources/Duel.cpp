@@ -95,6 +95,8 @@ void 		Duel::registerDirection(unsigned int cubeId)
 		buff = _player1;
 	else if (cubeId == _player2Id)
 		buff = _player2;
+	else
+		return ;
 	curDir = getCubeOrientation(buff);
 	if (curDir == EDirection::IDLE || _lastDirection == curDir)
 	{
