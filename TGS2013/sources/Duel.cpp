@@ -35,6 +35,7 @@ EDirection::EDirection 	Duel::getCubeOrientation(Sifteo::VideoBuffer *player)
 	
 	if (MAX2(ABS(accel.x), ABS(accel.y)) == ABS(accel.x))
 	{
+		LOG("ACCEL X = %d\n", accel.x);
 		if (accel.x > 0)
 			return (EDirection::LEFT);
 		else
@@ -42,6 +43,7 @@ EDirection::EDirection 	Duel::getCubeOrientation(Sifteo::VideoBuffer *player)
 	}
 	else
 	{
+		LOG("ACCEL Y = %d\n", accel.y);
 		if (accel.y > 0)
 			return (EDirection::TOP);
 		else
@@ -51,23 +53,23 @@ EDirection::EDirection 	Duel::getCubeOrientation(Sifteo::VideoBuffer *player)
 
 void 		Duel::registerDirection(unsigned int cubeId)
 {
-	if (_winner)
-		return ;
+//	if (_winner)
+//		return ;
 	if (_player1Id == cubeId)
 	{
 		if (_recordedNbr == _currentNbr)
 		{
 			_recorded[_recordedNbr++] = getCubeOrientation(_player1);
-			LOG("new direction recorded: %d", _recorded[_recordedNbr - 1]);
+			LOG("new direction recorded: %d\n", _recorded[_recordedNbr - 1]);
 		}
 		else if (_recorded[_recordedNbr] != getCubeOrientation(_player1))
 		{
-			LOG("You failed like a little bitch...");
+			LOG("You failed like a little bitch...\n");
 			_winner = 2;
 		}
 		else
 		{
-			LOG("You succeed mother fucker!");
+			LOG("You succeed mother fucker!\n");
 			_recordedNbr++;
 		}
 	}
@@ -76,19 +78,19 @@ void 		Duel::registerDirection(unsigned int cubeId)
 		if (_recordedNbr == _currentNbr)
 		{
 			_recorded[_recordedNbr++] = getCubeOrientation(_player2);
-			LOG("new direction recorded: %d", _recorded[_recordedNbr - 1]);
+			LOG("new direction recorded: %d\n", _recorded[_recordedNbr - 1]);
 		}
 		else if (_recorded[_recordedNbr] != getCubeOrientation(_player2))
 		{
-			LOG("You failed like a little bitch...");
+			LOG("You failed like a little bitch...\n");
 			_winner = 1;
 		}
 		else
 		{
-			LOG("You succeed mother fucker!");
+			LOG("You succeed mother fucker!\n");
 			_recordedNbr++;
 		}
 	}
 	if (_winner)
-		LOG("YOUHOU! player %d won!", _winner);
+		LOG("YOUHOU! player %d won!\n", _winner);
 }

@@ -1886,29 +1886,24 @@ const uint16_t RockTile_data[] = {
     0x4f3d,0xd0b1,0x9618,0x29e7,
 };
 
-extern const uint16_t Pikachu_data[];
+extern const uint16_t GrassTile_data[];
 
-extern const Sifteo::PinnedAssetImage Pikachu = {{
+extern const Sifteo::AssetImage GrassTile = {{
     /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
-    /* width    */ 4,
-    /* height   */ 4,
-    /* frames   */ 20,
-    /* format   */ _SYS_AIF_PINNED,
+    /* width    */ 16,
+    /* height   */ 16,
+    /* frames   */ 1,
+    /* format   */ _SYS_AIF_DUB_I8,
     /* reserved */ 0,
-    /* pData    */ 0
+    /* pData    */ reinterpret_cast<uintptr_t>(GrassTile_data)
 }};
 
-extern const uint16_t Plants_data[];
-
-extern const Sifteo::PinnedAssetImage Plants = {{
-    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
-    /* width    */ 8,
-    /* height   */ 8,
-    /* frames   */ 15,
-    /* format   */ _SYS_AIF_PINNED,
-    /* reserved */ 0,
-    /* pData    */ 640
-}};
+const uint16_t GrassTile_data[] = {
+    0x0101,0x0000,0x64dc,0x7062,0xcf28,0x1c53,0x1714,0x79e3,
+    0x830a,0x6362,0x4f3c,0x3061,0x2850,0xa79e,0x18f8,0xca1c,
+    0x14f3,0xc507,0x78c5,0xc29e,0xd8a0,0xcf18,0x1853,0x140c,
+    0xe78a,0x0029,
+};
 
 extern const uint16_t SandTile_data[];
 
@@ -1929,24 +1924,17 @@ const uint16_t SandTile_data[] = {
     0x0014,
 };
 
-extern const uint16_t GrassTile_data[];
+extern const uint16_t Pikachu_data[];
 
-extern const Sifteo::AssetImage GrassTile = {{
+extern const Sifteo::PinnedAssetImage Pikachu = {{
     /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
-    /* width    */ 16,
-    /* height   */ 16,
-    /* frames   */ 1,
-    /* format   */ _SYS_AIF_DUB_I8,
+    /* width    */ 4,
+    /* height   */ 4,
+    /* frames   */ 20,
+    /* format   */ _SYS_AIF_PINNED,
     /* reserved */ 0,
-    /* pData    */ reinterpret_cast<uintptr_t>(GrassTile_data)
+    /* pData    */ 0
 }};
-
-const uint16_t GrassTile_data[] = {
-    0x0101,0x0000,0x64dc,0x7062,0xcf28,0x1c53,0x1714,0x79e3,
-    0x830a,0x6362,0x4f3c,0x3061,0x2850,0xa79e,0x18f8,0xca1c,
-    0x14f3,0xc507,0x78c5,0xc29e,0xd8a0,0xcf18,0x1853,0x140c,
-    0xe78a,0x0029,
-};
 
 extern const uint16_t Cat_data[];
 
@@ -1958,6 +1946,30 @@ extern const Sifteo::PinnedAssetImage Cat = {{
     /* format   */ _SYS_AIF_PINNED,
     /* reserved */ 0,
     /* pData    */ 320
+}};
+
+extern const uint16_t Plants_data[];
+
+extern const Sifteo::PinnedAssetImage Plants = {{
+    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
+    /* width    */ 8,
+    /* height   */ 8,
+    /* frames   */ 15,
+    /* format   */ _SYS_AIF_PINNED,
+    /* reserved */ 0,
+    /* pData    */ 640
+}};
+
+extern const uint16_t Empty_data[];
+
+extern const Sifteo::PinnedAssetImage Empty = {{
+    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
+    /* width    */ 1,
+    /* height   */ 1,
+    /* frames   */ 4,
+    /* format   */ _SYS_AIF_PINNED,
+    /* reserved */ 0,
+    /* pData    */ 1600
 }};
 
 extern const uint16_t HorizontalWall_data[];
@@ -1974,22 +1986,6 @@ extern const Sifteo::AssetImage HorizontalWall = {{
 
 const uint16_t HorizontalWall_data[] = {
     0x0000,0x6cdc,0x1c62,0x6247,0x1c30,0x0247,
-};
-
-extern const uint16_t BlackTile_data[];
-
-extern const Sifteo::AssetImage BlackTile = {{
-    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
-    /* width    */ 16,
-    /* height   */ 16,
-    /* frames   */ 1,
-    /* format   */ _SYS_AIF_DUB_I8,
-    /* reserved */ 0,
-    /* pData    */ reinterpret_cast<uintptr_t>(BlackTile_data)
-}};
-
-const uint16_t BlackTile_data[] = {
-    0x0101,0x0000,0x44dc,0x5faa,
 };
 
 extern const uint16_t IsHere_data[];
@@ -2014,6 +2010,22 @@ const uint16_t IsHere_data[] = {
     0xa3be,0x77d2,0xfa54,0x952c,0x0038,
 };
 
+extern const uint16_t BlackTile_data[];
+
+extern const Sifteo::AssetImage BlackTile = {{
+    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
+    /* width    */ 16,
+    /* height   */ 16,
+    /* frames   */ 1,
+    /* format   */ _SYS_AIF_DUB_I8,
+    /* reserved */ 0,
+    /* pData    */ reinterpret_cast<uintptr_t>(BlackTile_data)
+}};
+
+const uint16_t BlackTile_data[] = {
+    0x0101,0x0000,0x44dc,0x5faa,
+};
+
 extern const uint16_t VerticalWall_data[];
 
 extern const Sifteo::AssetImage VerticalWall = {{
@@ -2029,16 +2041,4 @@ extern const Sifteo::AssetImage VerticalWall = {{
 const uint16_t VerticalWall_data[] = {
     0x0000,0x6cdc,0x3062,0xf3c6,0x014c,
 };
-
-extern const uint16_t Empty_data[];
-
-extern const Sifteo::PinnedAssetImage Empty = {{
-    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
-    /* width    */ 1,
-    /* height   */ 1,
-    /* frames   */ 4,
-    /* format   */ _SYS_AIF_PINNED,
-    /* reserved */ 0,
-    /* pData    */ 1600
-}};
 
