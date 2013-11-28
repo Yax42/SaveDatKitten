@@ -1,3 +1,5 @@
+#include <sifteo.h>
+
 #include "Player.hh"
 #include "Map.hh"
 #include "Kitty.hh"
@@ -25,8 +27,6 @@ Player::~Player(){}
 
 void		Player::move()
 {
-	Sifteo::Int2 	accel = _mainCube.cube()->physicalAccel().xy();
-	_char._dir = accel;
 }
 
 /******PRIVATE******/
@@ -59,7 +59,12 @@ bool	Player::clampPosition()
 
 void					Player::flush(Map &map)
 {
-	move();
+	//LOG("%f %f\n", _char._dir.x, _char._dir.y);
+	Sifteo::Int2 	accel = _mainCube.cube()->physicalAccel().xy();
+	//LOG("%d %d\n", accel.x, accel.y);
+	//_char._dir.x = accel.x;
+	_char._dir = accel;
+
 	_mainCube.drawer().updateCharacters(_x, _y);
 
 	int prevX = _x;
