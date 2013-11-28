@@ -25,5 +25,5 @@ extern const Sifteo::PinnedAssetImage Flash;
 extern const Sifteo::PinnedAssetImage UpDown;
 extern const Sifteo::PinnedAssetImage Cat;
 extern const Sifteo::PinnedAssetImage Shroom;
-extern const Sifteo::AssetImage BlackTile;
 extern const Sifteo::AssetImage IsHere;
+extern const Sifteo::AssetImage BlackTile;

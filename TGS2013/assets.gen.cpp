@@ -2406,22 +2406,6 @@ extern const Sifteo::PinnedAssetImage Shroom = {{
     /* pData    */ 1940
 }};
 
-extern const uint16_t BlackTile_data[];
-
-extern const Sifteo::AssetImage BlackTile = {{
-    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
-    /* width    */ 16,
-    /* height   */ 16,
-    /* frames   */ 1,
-    /* format   */ _SYS_AIF_DUB_I8,
-    /* reserved */ 0,
-    /* pData    */ reinterpret_cast<uintptr_t>(BlackTile_data)
-}};
-
-const uint16_t BlackTile_data[] = {
-    0x0101,0x0000,0x76e4,0x5faa,
-};
-
 extern const uint16_t IsHere_data[];
 
 extern const Sifteo::AssetImage IsHere = {{
@@ -2442,5 +2426,21 @@ const uint16_t IsHere_data[] = {
     0x1df4,0xbe95,0xd2a3,0x5477,0x8efa,0xdf4a,0x8951,0x0fdc,
     0x4a8c,0x44a8,0x9fee,0xd2a3,0x5477,0x8efa,0xdf4a,0xe951,
     0x2a3b,0x477d,0xcfa5,0x8952,0x0003,
+};
+
+extern const uint16_t BlackTile_data[];
+
+extern const Sifteo::AssetImage BlackTile = {{
+    /* group    */ reinterpret_cast<uintptr_t>(&GameAssets),
+    /* width    */ 16,
+    /* height   */ 16,
+    /* frames   */ 1,
+    /* format   */ _SYS_AIF_DUB_I8,
+    /* reserved */ 0,
+    /* pData    */ reinterpret_cast<uintptr_t>(BlackTile_data)
+}};
+
+const uint16_t BlackTile_data[] = {
+    0x0101,0x0000,0x76e4,0x5faa,
 };
 

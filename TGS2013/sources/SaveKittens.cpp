@@ -20,7 +20,8 @@ void SaveKittens::init()
 		_cubes[i].attach(i);
 		_cubes[i].bg0.image(Sifteo::vec(0, 0), BlackTile);
 	}
-	_mode = DUEL;
+	//_mode = DUEL;
+	_mode = EXPLORATION;
 	_duel.setCubes(_cubes, 0, _cubes + 1, 1, &_player, &_player2);
 	_player.updateChar();
 	_player2.updateChar();
@@ -41,12 +42,11 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 		if (_player.shining)
 			_player.follow(Paw, _kitty.character());
 		else
-			;//_player.follow(Mark, _player2);
-
+			_player.follow(Mark, _player2);
 		if (_player2.shining)
 			_player2.follow(Paw, _kitty.character());
 		else
-			;//_player.follow(Mark, _player);
+			_player.follow(Mark, _player);
 		_player.flush(_map);
 		_player2.flush(_map);
 		_kitty.update(dt);
@@ -70,6 +70,7 @@ void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned s
 	}
 	else if (_mode == DUEL)
 	{
+		
 	}
 }
 
