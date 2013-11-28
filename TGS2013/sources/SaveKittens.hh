@@ -20,6 +20,8 @@ public:
 	};
 
 private:   
+	Player 				*_winner;
+
 	Player				_player;
 	Player				_player2;
 	Kitty				_kitty;
@@ -37,4 +39,5 @@ public:
 	void update(Sifteo::TimeDelta dt);
 	void onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned secondID, unsigned secondSide);
 	void onCubeMove(unsigned int value);
+	void onCubeTouch(unsigned int value);
 };

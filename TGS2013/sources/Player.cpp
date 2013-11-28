@@ -12,7 +12,7 @@ Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, int id) :
 	_yOld(-1),
 	_mainCube(mainCube),
 	_char((id == 0) ? Toad : Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 150),
-	shining(true)
+	shining(false)
 {
     clampPosition();
 	_char._isDir = true;
