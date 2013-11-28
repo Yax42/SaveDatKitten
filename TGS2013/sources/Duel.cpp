@@ -9,8 +9,11 @@
 #define	ORIENTTHRESHOLD 		40
 #define CHANGE_PLAYER_TIME 		1
 #define WON_TIME 				3
+#define FOLLOW_TIME 			5
 
 Duel::Duel() :
+	_followActivated(NULL),
+	_followTimer(0),
 	_changePlayer(false),
 	_timer(0),
 	_player1Id(0),
@@ -29,12 +32,15 @@ Duel::~Duel()
 }
 
 void 		Duel::setCubes(Sifteo::VideoBuffer *player1, unsigned int player1Id,
-							Sifteo::VideoBuffer *player2, unsigned int player2Id)
+							Sifteo::VideoBuffer *player2, unsigned int player2Id,
+							Player *p1, Player *p2)
 {
 	_player1Id = player1Id;
 	_player2Id = player2Id;
 	_player1 = player1;
 	_player2 = player2;
+	_p1 = p1;
+	_p2 = p2;
 	_currentNbr = 0;
 	_currentPlayer = _player1Id;
 	LOG("Current player: %d\n", _currentPlayer);
@@ -103,11 +109,19 @@ void 		Duel::printLastDirection()
 
 void 		Duel::update(float deltaTime)
 {
-	if (_changePlayer)
+	if (_changePlayer) // is changing player
 	{
 		_timer += deltaTime;
+		if (_currentPlayer == _player1Id)
+			_player2->sprites[0].setImage(Perdre, 0);
+		else
+			_player1->sprites[0].setImage(Perdre, 0);
 		if (_timer > CHANGE_PLAYER_TIME)
 		{
+			if (_currentPlayer == _player1Id)
+				_player2->sprites[0].setImage(Empty, 0);
+			else
+				_player1->sprites[0].setImage(Empty, 0);
 			_currentPlayer = (_currentPlayer == _player1Id) ? (_player2Id) : (_player1Id);
 			_player2->sprites[0].setImage(Empty, 0);
 			_player1->sprites[0].setImage(Empty, 0);
@@ -124,6 +138,16 @@ void 		Duel::update(float deltaTime)
 			_winner = -1;
 			_player1->sprites[0].setImage(Empty, 0);
 			_player2->sprites[0].setImage(Empty, 0);
+		}
+	}
+	if (_followActivated != NULL)
+	{
+		_followTimer += deltaTime;
+		if (_followTimer > FOLLOW_TIME)
+		{
+			_followTimer = 0;
+			_followActivated->shining = false;
+			_followActivated = NULL;
 		}
 	}
 }
@@ -161,6 +185,8 @@ void 		Duel::registerDirection(unsigned int cubeId)
 	else if (_recorded[_currentNbr] != _lastDirection) // the player failed to find the right side
 	{
 		_winner = (_currentPlayer == _player1Id) ? (_player2Id) : (_player1Id);
+		_followActivated = (_currentPlayer == _player1Id) ? _p1 : _p2;
+		_followActivated->shining = true;
 		++_currentNbr;
 	}
 	else // the player succeed

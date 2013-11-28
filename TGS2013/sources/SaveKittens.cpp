@@ -22,7 +22,7 @@ void SaveKittens::init()
 	}
 	//_mode = DUEL;
 	_mode = EXPLORATION;
-	_duel.setCubes(_cubes, 0, _cubes + 1, 1);
+	_duel.setCubes(_cubes, 0, _cubes + 1, 1, &_player, &_player2);
 	_player.updateChar();
 	_player2.updateChar();
 	_map.printCase(_player);
@@ -42,13 +42,13 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 		if (_player.shining)
 			_player.follow(Paw, _kitty.character());
 		else
-			;//_player.follow(Mark, _player2);
+			_player.follow(Shroom, _player2._char);
 		if (_player2.shining)
 			_player2.follow(Paw, _kitty.character());
 		else
-			;//_player.follow(Mark, _player);
+			_player2.follow(Flash, _player._char);
 		_player.flush(_map);
-		//_player2.flush(_map);
+		_player2.flush(_map);
 		_kitty.update(dt);
 	}
 	else if (_mode == DUEL)
