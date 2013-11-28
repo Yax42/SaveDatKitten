@@ -6,6 +6,12 @@
 class 	Duel
 {
 private:
+	Sifteo::PinnedAssetImage const	*_img;
+	unsigned int 					_frame;
+
+	bool 					_changePlayer;
+	float 					_timer;
+
 	unsigned int 			_player1Id;
 	unsigned int 			_player2Id;
 	Sifteo::VideoBuffer 	*_player1;
@@ -21,7 +27,7 @@ private:
 	
 	EDirection::EDirection 	_lastDirection;
 
-	void 					printLastDirection(Sifteo::VideoBuffer *player);
+	void 					printLastDirection();
 	
 public:
 	Duel();
@@ -30,7 +36,7 @@ public:
 	void 					setCubes(Sifteo::VideoBuffer *player1, unsigned int player1Id,
 									 Sifteo::VideoBuffer *player2, unsigned int player2Id);
 	EDirection::EDirection 	getCubeOrientation(Sifteo::VideoBuffer *player);
-	void 					update(float deltaTime) { }
+	void 					update(float deltaTime);
 	void 					registerDirection(unsigned int cubeId);
 };
 

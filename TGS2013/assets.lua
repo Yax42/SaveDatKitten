@@ -15,6 +15,7 @@ Shroom = image{"resources/shroom.png", pinned=true, width=32, height=32}
 Flash = image{"resources/flash.png", pinned=true, width=32, height=32}
 UpDown = image{"resources/UpDown.png", pinned=true, width=128, height=32}
 LeftRight = image{"resources/LeftRight.png", pinned=true, width=32, height=128}
+SuccessFail = image{"resources/SuccessFail.png", pinned=true, width=64, height=64}
 VerticalWall = image{"resources/sideWall.png"}
 HorizontalWall = image{"resources/topWall.png"}
 BlackTile = image{"resources/black.png"}
