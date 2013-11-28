@@ -19,7 +19,10 @@ public:
 	int								x() const { return (static_cast<int>(_pos.x)); }
 	int								y() const { return (static_cast<int>(_pos.y)); }
 
-private:
+public:
+
+	Sifteo::Float2					_dir;
+	bool							_isDir;
 	const Sifteo::PinnedAssetImage	&_image;
 	Sifteo::Float2					_pos;
 	Sifteo::Float2					_goal;
