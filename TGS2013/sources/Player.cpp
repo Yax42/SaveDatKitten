@@ -61,9 +61,17 @@ void					Player::flush(Map &map)
 {
 	//LOG("%f %f\n", _char._dir.x, _char._dir.y);
 	Sifteo::Int2 	accel = _mainCube.cube()->physicalAccel().xy();
-	//LOG("%d %d\n", accel.x, accel.y);
-	//_char._dir.x = accel.x;
-	_char._dir = accel;
+	///LOG("%d %d\n", accel.x, accel.y);
+	if (accel.x > 10 || accel.x < -10)
+		_char._dir.x = accel.x;
+	else
+		_char._dir.x = 0;
+	if (accel.y > 10 || accel.y < -10)
+		_char._dir.y = accel.y;
+	else
+		_char._dir.y = 0;
+
+	//_char._dir = accel;
 
 	_mainCube.drawer().updateCharacters(_x, _y);
 
