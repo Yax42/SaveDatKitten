@@ -24,7 +24,6 @@ void					Character::update(float delta)
 	Sifteo::Float2		dir;
 	if (_dir.x == 0 && _dir.y == 0)
 	{
-			LOG("CC\n");
 	}
 	else if (_isDir)
 	{
@@ -38,7 +37,7 @@ void					Character::update(float delta)
 			}
 		if (_pos.y < 16 - 32 || _pos.y > MAP_SIZE * 128 - 16 - 32)
 		{
-			_pos.x = prevPos.y;
+			_pos.y = prevPos.y;
 			}
 	}
 	else
