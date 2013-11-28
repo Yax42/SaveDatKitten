@@ -109,11 +109,19 @@ void 		Duel::printLastDirection()
 
 void 		Duel::update(float deltaTime)
 {
-	if (_changePlayer)
+	if (_changePlayer) // is changing player
 	{
 		_timer += deltaTime;
+		if (_currentPlayer == _player1Id)
+			_player2->sprites[0].setImage(Perdre, 0);
+		else
+			_player1->sprites[0].setImage(Perdre, 0);
 		if (_timer > CHANGE_PLAYER_TIME)
 		{
+			if (_currentPlayer == _player1Id)
+				_player2->sprites[0].setImage(Empty, 0);
+			else
+				_player1->sprites[0].setImage(Empty, 0);
 			_currentPlayer = (_currentPlayer == _player1Id) ? (_player2Id) : (_player1Id);
 			_player2->sprites[0].setImage(Empty, 0);
 			_player1->sprites[0].setImage(Empty, 0);

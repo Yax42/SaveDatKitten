@@ -42,11 +42,11 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 		if (_player.shining)
 			_player.follow(Paw, _kitty.character());
 		else
-			_player.follow(Mark, _player2);
+			_player.follow(Shroom, _player2._char);
 		if (_player2.shining)
 			_player2.follow(Paw, _kitty.character());
 		else
-			_player.follow(Mark, _player);
+			_player2.follow(Flash, _player._char);
 		_player.flush(_map);
 		_player2.flush(_map);
 		_kitty.update(dt);
