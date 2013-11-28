@@ -8,7 +8,7 @@ class SortSprites;
 class Character
 {
 public:
-	Character(const Sifteo::PinnedAssetImage &image, float x, float y, float maxSPeed);
+	Character(const Sifteo::PinnedAssetImage &image, int x, int y, float maxSPeed);
 	~Character() {}
 	void							update(float delta);
 	void							print(SortSprites &sprites, unsigned int x, unsigned int y);

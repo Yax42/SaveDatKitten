@@ -23,28 +23,6 @@ Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, int id) :
 
 Player::~Player(){}
 
-/*
-void		Player::connection(Sifteo::VideoBuffer *cube1, unsigned int side1, Sifteo::VideoBuffer *cube2, unsigned int side2)
-{
-	int		mainSide;
-
-	if (cube1 == _mainCube->cube())
-		mainSide = side1;
-		sideSide = side2;
-	}
-	else if (cube2 == _mainCube->cube() && cube1 == _sideCube->cube())
-	{
-		mainSide = side2;
-		sideSide = side1;
-	}
-	else
-		return ;
-	//gerrer l'orientation des cubes
-	move(mainSide);
-	_char.setGoal(_x, _y);
-}
-*/
-
 void		Player::move()
 {
 	Sifteo::Int2 	accel = _mainCube.cube()->physicalAccel().xy();
@@ -87,7 +65,7 @@ void					Player::flush(Map &map)
 	int prevX = _x;
 	int prevY = _y;
 	_x = (_char.x() + 16) / 128;
-	_y = (_char.x() + 16) / 128;
+	_y = (_char.y() + 16) / 128;
 
 	if (_y != prevY || _x != prevX)
 	{

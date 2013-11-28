@@ -5,12 +5,13 @@
 
 #include "Random.hh"
 
-Character::Character(const Sifteo::PinnedAssetImage & image, float x, float y, float maxSpeed) :
+Character::Character(const Sifteo::PinnedAssetImage & image, int x, int y, float maxSpeed) :
 	_image(image), _pos(), _goal(), _goalAlive(false), _maxSpeed(maxSpeed), _speed(0)
 {
 	
 	SortSprites::addChar(this);
 	_pos.set(x, y);
+	//LOG("%f\n", x);
 	_goal.set(0, 0);
 	_isDir = false;
 	_dir.x = 0;
@@ -21,7 +22,10 @@ Character::Character(const Sifteo::PinnedAssetImage & image, float x, float y, f
 void					Character::update(float delta)
 {
 	Sifteo::Float2		dir;
-	if (_isDir)
+	if (_dir.x == 0 && _dir.y == 0)
+	{
+	}
+	else if (_isDir)
 	{
 		Sifteo::Float2		prevPos = _pos;
 		Sifteo::Float2		velocity = (_dir).normalize() * delta * _speed;
