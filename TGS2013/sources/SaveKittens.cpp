@@ -21,7 +21,7 @@ void SaveKittens::init()
 		_cubes[i].bg0.image(Sifteo::vec(0, 0), BlackTile);
 	}
 	_mode = DUEL;
-	_duel.setCubes(_cubes, 0, _cubes + 1, 1);
+	_duel.setCubes(_cubes, 0, _cubes + 1, 1, &_player, &_player2);
 	_player.updateChar();
 	_player2.updateChar();
 	_map.printCase(_player);
@@ -70,7 +70,6 @@ void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned s
 	}
 	else if (_mode == DUEL)
 	{
-		
 	}
 }
 
