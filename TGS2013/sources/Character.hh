@@ -16,8 +16,8 @@ public:
 	bool							goalAlive() const;
 	int								frame() { return (_spriteId); }
 	const Sifteo::PinnedAssetImage	*image() { return (&_image); }
-	int								x() { return (static_cast<int>(_pos.x)); }
-	int								y() { return (static_cast<int>(_pos.y)); }
+	int								x() const { return (static_cast<int>(_pos.x)); }
+	int								y() const { return (static_cast<int>(_pos.y)); }
 
 private:
 	const Sifteo::PinnedAssetImage	&_image;

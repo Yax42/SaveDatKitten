@@ -1,5 +1,6 @@
 #include "Player.hh"
 #include "Map.hh"
+#include "Kitty.hh"
 #include "assets.gen.h"
 
 #include "Random.hh"
@@ -13,9 +14,13 @@ Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, Sifteo::VideoBuffer 
 	_sideCubeInstance(sideCube),
 	_mainCube(&_mainCubeInstance),
 	_sideCube(&_sideCubeInstance),
-	_char(Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 150)
+	_char(Toad, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 150),
+	shining(true)
 {
     clampPosition();
+	//_mainCube->cube()->bg1.maskedImage(Paw, Pikachu);// Sifteo::vec(0, 0));
+	//_sideCube->cube()->bg1.maskedImage(Paw, Plants);// Sifteo::vec(0, 0));
+	//_sideCube->cube()->bg1.maskedImage(Paw, Sifteo::vec(0, 0));
 }
 
 Player::~Player(){}
@@ -113,3 +118,95 @@ void					Player::updateChar()
     _mainCube->drawer().setCharacters();
     _sideCube->drawer().setCharacters();
 }
+
+void					Player::follow(const Sifteo::PinnedAssetImage &image, const Character &target)
+{
+	static int		halfScreen = SCREEN_SIZE / 2 - 16;
+	int				xCKitty = (target.x() - 16) /  SCREEN_SIZE;
+	int				yCKitty = (target.y() - 16) /  SCREEN_SIZE;
+
+	if (xCKitty != x() || yCKitty != y())
+	{
+		int		xPThis = x() * SCREEN_SIZE + halfScreen;
+		int		yPThis = y() * SCREEN_SIZE + halfScreen;
+		int		xRKitty = target.x() - xPThis;
+		int		yRKitty = target.y() - yPThis;
+		if (yRKitty == 0)
+			yRKitty = 1;
+		if (xRKitty == 0)
+			xRKitty = 1;
+
+		int		x = 0;
+		int		y = 0;
+		int		xSign = (xRKitty > 0) ? 1 : -1;
+		int		ySign = (yRKitty > 0) ? 1 : -1;
+
+		if (xSign * xRKitty > ySign * yRKitty)
+		{
+			x = (xSign > 0) ? SCREEN_SIZE - 32 : 0;
+			y = (halfScreen * yRKitty) / (xRKitty * xSign);
+			y = y + halfScreen;
+		}
+		else
+		{
+			y = (ySign > 0) ? SCREEN_SIZE - 32 : 0;
+			x = (halfScreen * xRKitty) / (yRKitty * ySign);
+			x = x + halfScreen;
+		}
+
+		cube().sprites[0].move(x, y);
+		cube().sprites[0].setImage(image, 0);
+	}
+	else
+		cube().sprites[0].setImage(Empty, 0);
+	_sideCube->cube()->sprites[0].setImage(Empty, 0);
+}
+
+/*
+void					Player::updatePaw(Kitty &kitty)
+{
+	static int		halfScreen = SCREEN_SIZE / 2 - 16;
+	int				xCKitty = kitty.character().x() /  SCREEN_SIZE;
+	int				yCKitty = kitty.character().y() /  SCREEN_SIZE;
+
+	if (_shining && (xCKitty != x() || yCKitty != y()))
+	{
+		int		xPThis = x() * SCREEN_SIZE + halfScreen;
+		int		yPThis = y() * SCREEN_SIZE + halfScreen;
+		int		xRKitty = kitty.character().x() - xPThis;
+		int		yRKitty = kitty.character().y() - yPThis;
+		//int		xRKitty = _char.x() - xPThis;
+		//int		yRKitty = _char.y() - yPThis;
+		if (yRKitty == 0)
+			yRKitty = 1;
+		if (xRKitty == 0)
+			xRKitty = 1;
+
+		int		x = 0;
+		int		y = 0;
+		int		xSign = (xRKitty > 0) ? 1 : -1;
+		int		ySign = (yRKitty > 0) ? 1 : -1;
+
+		if (xSign * xRKitty > ySign * yRKitty)
+		{
+			x = (xSign > 0) ? SCREEN_SIZE - 32 : 0;
+			y = (halfScreen * yRKitty) / (xRKitty * xSign);
+			y = y + halfScreen;
+		}
+		else
+		{
+			y = (ySign > 0) ? SCREEN_SIZE - 32 : 0;
+			x = (halfScreen * xRKitty) / (yRKitty * ySign);
+			x = x + halfScreen;
+		}
+
+		cube().sprites[0].move(x, y);
+		cube().sprites[0].setImage(Paw, 0);
+	}
+	else
+		cube().sprites[0].setImage(Empty, 0);
+	_sideCube->cube()->sprites[0].setImage(Empty, 0);
+
+	//cube().bg1.setPanning(Sifteo::vec(0, _y));
+}
+*/

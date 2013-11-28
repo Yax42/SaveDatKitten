@@ -6,6 +6,7 @@
 
 #define	MAX_SPRITES		8
 #define NB_CHARS		2
+#define NB_ABOVE		1
 
 class	SortSprites
 {

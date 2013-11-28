@@ -38,16 +38,16 @@ void			SortSprites::updateCharacters(int x, int y)
 			newY < -32 ||
 			newY > (int) Sifteo::LCD_height)
 		{
-			_cube->sprites[_toDraw[i].idx].move(128, 128);
-			_cube->sprites[_toDraw[i].idx].setImage(Empty, 0);
+			_cube->sprites[_toDraw[i].idx + NB_ABOVE].move(128, 128);
+			_cube->sprites[_toDraw[i].idx + NB_ABOVE].setImage(Empty, 0);
 		}
 		else
 		{
 			_toDraw[i].frame = SortSprites::characters[i]->frame();
 			_toDraw[i].x = newX;
 			_toDraw[i].y = newY;
-			_cube->sprites[_toDraw[i].idx].move(_toDraw[i].x, _toDraw[i].y);
-			_cube->sprites[_toDraw[i].idx].setImage(*(_toDraw[i].img), _toDraw[i].frame);
+			_cube->sprites[_toDraw[i].idx + NB_ABOVE].move(_toDraw[i].x, _toDraw[i].y);
+			_cube->sprites[_toDraw[i].idx + NB_ABOVE].setImage(*(_toDraw[i].img), _toDraw[i].frame);
 		}
 	}
 }
@@ -103,10 +103,10 @@ void	SortSprites::initSort()
 	for (int i = 0; i < _spriteNbr; ++i)
 	{
 		LOG("- %d, %d\n", _sorted[i]->idx, _toDraw[i].idx);
-		_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
-		_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
+		_cube->sprites[i + NB_ABOVE].move(_sorted[i]->x, _sorted[i]->y);
+		_cube->sprites[i + NB_ABOVE].setImage(*(_sorted[i]->img), _sorted[i]->frame);
 	}
-	for (unsigned int i = _spriteNbr; i < MAX_SPRITES; ++i)
+	for (unsigned int i = _spriteNbr + NB_ABOVE; i < MAX_SPRITES; ++i)
 		_cube->sprites[i].setImage(Empty, 0);
 }
 
@@ -120,10 +120,10 @@ void	SortSprites::flush()
 			{
 				swap(i, j);
 
-				_cube->sprites[i].move(_sorted[i]->x, _sorted[i]->y);
-				_cube->sprites[i].setImage(*(_sorted[i]->img), _sorted[i]->frame);
-				_cube->sprites[j].move(_sorted[j]->x, _sorted[j]->y);
-				_cube->sprites[j].setImage(*(_sorted[j]->img), _sorted[j]->frame);
+				_cube->sprites[i + NB_ABOVE].move(_sorted[i]->x, _sorted[i]->y);
+				_cube->sprites[i + NB_ABOVE].setImage(*(_sorted[i]->img), _sorted[i]->frame);
+				_cube->sprites[j + NB_ABOVE].move(_sorted[j]->x, _sorted[j]->y);
+				_cube->sprites[j + NB_ABOVE].setImage(*(_sorted[j]->img), _sorted[j]->frame);
 			}
 		}
 	}
