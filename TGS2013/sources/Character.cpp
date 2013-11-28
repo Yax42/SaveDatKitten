@@ -24,17 +24,22 @@ void					Character::update(float delta)
 	Sifteo::Float2		dir;
 	if (_dir.x == 0 && _dir.y == 0)
 	{
+			LOG("CC\n");
 	}
 	else if (_isDir)
 	{
 		Sifteo::Float2		prevPos = _pos;
-		Sifteo::Float2		velocity = (_dir).normalize() * delta * _speed;
+		Sifteo::Float2		velocity = (_dir).normalize() * delta * _maxSpeed;
 		_pos += velocity;
 		dir = (_dir).normalize();
 		if (_pos.x < 16 || _pos.x > MAP_SIZE * 128 - 16 - 32)
+		{
 			_pos.x = prevPos.x;
-		if (_pos.y < 16 - 32 || _pos.x > MAP_SIZE * 128 - 16 - 32)
+			}
+		if (_pos.y < 16 - 32 || _pos.y > MAP_SIZE * 128 - 16 - 32)
+		{
 			_pos.x = prevPos.y;
+			}
 	}
 	else
 	{
