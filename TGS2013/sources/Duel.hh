@@ -16,13 +16,17 @@ private:
 	unsigned int 			_currentNbr;
 	EDirection::EDirection 	_recorded[24];
 	unsigned int 			_recordedNbr;
+	
+	EDirection::EDirection 	_lastDirection;
 
+	void 					printLastDirection(Sifteo::VideoBuffer *player);
+	
 public:
 	Duel();
 	~Duel();
 	
 	void 					setCubes(Sifteo::VideoBuffer *player1, unsigned int player1Id,
-									Sifteo::VideoBuffer *player2, unsigned int player2Id);
+									 Sifteo::VideoBuffer *player2, unsigned int player2Id);
 	EDirection::EDirection 	getCubeOrientation(Sifteo::VideoBuffer *player);
 	void 					update(float deltaTime) { }
 	void 					registerDirection(unsigned int cubeId);

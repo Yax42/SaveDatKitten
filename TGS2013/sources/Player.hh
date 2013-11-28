@@ -10,7 +10,8 @@ namespace EDirection
 		BOT,
 		RIGHT,
 		TOP,
-		LEFT
+		LEFT,
+		IDLE
 	};
 };
 
