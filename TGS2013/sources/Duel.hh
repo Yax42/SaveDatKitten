@@ -17,6 +17,8 @@ private:
 	EDirection::EDirection 	_recorded[24];
 	unsigned int 			_recordedNbr;
 	
+	unsigned int  			_currentPlayer;
+	
 	EDirection::EDirection 	_lastDirection;
 
 	void 					printLastDirection(Sifteo::VideoBuffer *player);
