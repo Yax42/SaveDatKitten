@@ -19,6 +19,7 @@ public:
 	enum 	EGameMode
 	{
 		EXPLORATION,
+		BEFOREDUEL,
 		DUEL,
 		FINDKITTEN
 	};

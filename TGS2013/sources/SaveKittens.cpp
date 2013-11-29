@@ -67,7 +67,7 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 			reset();
 		}
 	}
-	else if (_mode == EXPLORATION || _mode == FINDKITTEN)
+	else if (_mode == EXPLORATION || _mode == FINDKITTEN || _mode == BEFOREDUEL)
 	{
 		_player.update(dt);
 		_player2.update(dt);
@@ -82,12 +82,14 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 		_player.flush(_map);
 		_player2.flush(_map);
 		_kitty.update(dt);
-		if (_player.x() == _player2.x() &&
+		if (_mode == BEFOREDUEL)
+			_mode = DUEL;
+		else if (_player.x() == _player2.x() &&
 			_player.y() == _player2.y() &&
 			_mode != FINDKITTEN)
 		{
 			_duel.reset();
-			_mode = DUEL;
+			_mode = BEFOREDUEL;
 		}
 		else if (_mode == FINDKITTEN)
 		{
