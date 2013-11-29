@@ -10,7 +10,7 @@
 #define TILE_SIZE 		64
 #define WALL_THICK 		16
 #define SCREEN_SIZE 	128
-#define MAX_PLANT_NBR	4
+#define MAX_PLANT_NBR	3
 #define MAX_SPRITES 	8
 #define TREE_SPRITE_NBR	5
 

@@ -11,7 +11,6 @@ Character::Character(const Sifteo::PinnedAssetImage & image, int x, int y, float
 	
 	SortSprites::addChar(this);
 	_pos.set(x, y);
-	//LOG("%f\n", x);
 	_goal.set(0, 0);
 	_isDir = false;
 	_dir.x = 0;

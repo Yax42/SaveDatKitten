@@ -67,21 +67,13 @@ void Map::genMap()
 	}
 	for (unsigned int y = 0; y < MAP_SIZE; ++y)
 	{
-		LOG("\n");
 		for (unsigned int x = 0; x < MAP_SIZE; ++x)
 		{
 			_map[y * MAP_SIZE + x].type = checkZone(zones, x, y);
 			_map[y * MAP_SIZE + x].plantNbr = gRandom.raw() % MAX_PLANT_NBR;
 			chooseTreePositions(x, y);
-			if (_map[y * MAP_SIZE + x].type == ZONE_GRASS)
-				LOG("G");
-			else if (_map[y * MAP_SIZE + x].type == ZONE_SAND)
-				LOG("S");
-			else if (_map[y * MAP_SIZE + x].type == ZONE_ROCK)
-				LOG("R");
 		}
 	}
-	LOG("\n");
 }
 
 Map::EZoneType Map::checkZone(SZone *zones, unsigned int x, unsigned int y) const
@@ -119,11 +111,8 @@ void Map::printCase(Player &player) const
 	unsigned int				y = static_cast<unsigned int>(player.y());
 	Sifteo::AssetImage const 	*image;
 	
-	LOG("Tree nbr = %d\n", _map[y * MAP_SIZE + x].plantNbr);
 	for (int i = 0; i < _map[y * MAP_SIZE + x].plantNbr; ++i)
 	{
-		LOG("add tree #%d\n", i);
-		LOG("at pos %d, %d\n", _map[y * MAP_SIZE + x].plants[i].pos.x, _map[y * MAP_SIZE + x].plants[i].pos.y);
 		player.drawer().addSprite(_map[y * MAP_SIZE + x].plants[i].pos.x,
 						 _map[y * MAP_SIZE + x].plants[i].pos.y,
 						 _map[y * MAP_SIZE + x].plants[i].frame,

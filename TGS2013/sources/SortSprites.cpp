@@ -21,7 +21,6 @@ void			SortSprites::setCharacters()
 	for (int i = 0; i < NB_CHARS; ++i)
 	{
 		_toDraw[i].img = SortSprites::characters[i]->image();
-		LOG("Set char\n");
 		++_spriteNbr;
 	}
 }
@@ -57,7 +56,6 @@ unsigned int	SortSprites::addSprite(unsigned int x,
 							   unsigned int frame,
 							   Sifteo::PinnedAssetImage const *img)
 {
-	LOG("_spriteNbr = %d\n", _spriteNbr);
 	if (_spriteNbr >= MAX_SPRITES)
 		return 0;
 	_toDraw[_spriteNbr].x = x;
@@ -65,7 +63,7 @@ unsigned int	SortSprites::addSprite(unsigned int x,
 	_toDraw[_spriteNbr].frame = frame;
 	_toDraw[_spriteNbr].img = img;
 	_toDraw[_spriteNbr].idx = _spriteNbr;
-	LOG("SPRITE ADDED #%d\n", ++_spriteNbr);
+	++_spriteNbr;
 	return (_spriteNbr);
 }
 
@@ -84,8 +82,6 @@ void	SortSprites::swap(int i, int j)
 
 void	SortSprites::initSort()
 {
-	LOG("INIT SORT:\n");
-	LOG("Sprite Nbr = %d\n", _spriteNbr);
 	for (int i = 0; i < _spriteNbr; ++i)
 	{
 		_toDraw[i].idx = i;
@@ -99,10 +95,8 @@ void	SortSprites::initSort()
 				swap(i, j);
 		}
 	}
-	LOG("Order:\n");
 	for (int i = 0; i < _spriteNbr; ++i)
 	{
-		LOG("- %d, %d\n", _sorted[i]->idx, _toDraw[i].idx);
 		_cube->sprites[i + NB_ABOVE].move(_sorted[i]->x, _sorted[i]->y);
 		_cube->sprites[i + NB_ABOVE].setImage(*(_sorted[i]->img), _sorted[i]->frame);
 	}

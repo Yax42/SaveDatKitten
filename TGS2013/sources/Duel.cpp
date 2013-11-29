@@ -57,7 +57,6 @@ void 		Duel::setCubes(Sifteo::VideoBuffer *player1, unsigned int player1Id,
 	_p1 = p1;
 	_p2 = p2;
 	_currentNbr = 0;
-	LOG("Current player: %d\n", _currentPlayer);
 }
 
 EDirection::EDirection 	Duel::getCubeOrientation(Sifteo::VideoBuffer *player)
