@@ -5,9 +5,8 @@
 
 class 	Duel
 {
-private:
-	Player					*_followActivated;
-	float 					_followTimer;
+private:	
+	bool 					_enteringMode;
 	
 	bool 					_changePlayer;
 	float 					_timer;
@@ -22,19 +21,22 @@ private:
 	unsigned int 			_winner;
 	
 	unsigned int 			_currentNbr;
-	EDirection::EDirection 	_recorded[24];
+	EDirection::EDirection 	_recorded[32];
 	unsigned int 			_recordedNbr;
 	
 	unsigned int  			_currentPlayer;
 	
 	EDirection::EDirection 	_lastDirection;
+	
+	int 					*_gameMode;
 
-	void 					printLastDirection();
+	void 					printLastDirection();	
 	
 public:
-	Duel();
+	Duel(int *gameMode);
 	~Duel();
-	
+
+	void 					reset();
 	void 					setCubes(Sifteo::VideoBuffer *player1, unsigned int player1Id,
 									 Sifteo::VideoBuffer *player2, unsigned int player2Id,
 									 Player *p1, Player *p2);

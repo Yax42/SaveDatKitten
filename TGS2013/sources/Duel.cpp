@@ -4,16 +4,18 @@
 
 #include "assets.gen.h"
 
+#include 	"SaveKittens.hh"
+
 #define MAX2(x, y) 		(x > y) ? (x) : (y)
 
 #define	ORIENTTHRESHOLD 		40
-#define CHANGE_PLAYER_TIME 		1
+#define CHANGE_PLAYER_TIME 		3.0f
+#define DRAW_LAST_TIME 			CHANGE_PLAYER_TIME / 2.0f
 #define WON_TIME 				3
-#define FOLLOW_TIME 			5
+#define BEGIN_DUEL_TIME			3
 
-Duel::Duel() :
-	_followActivated(NULL),
-	_followTimer(0),
+Duel::Duel(int *gameMode) :
+	_enteringMode(true),
 	_changePlayer(false),
 	_timer(0),
 	_player1Id(0),
@@ -23,7 +25,8 @@ Duel::Duel() :
 	_winner(-1),
 	_currentNbr(0),
 	_recordedNbr(0),
-	_lastDirection(EDirection::IDLE)
+	_lastDirection(EDirection::IDLE),
+	_gameMode(gameMode)
 {
 }
 
@@ -31,9 +34,21 @@ Duel::~Duel()
 {
 }
 
+void 		Duel::reset()
+{
+	_enteringMode = true;
+	_changePlayer = false;
+	_timer = 0;
+	_winner = -1;
+	_currentNbr = 0;
+	_recordedNbr = 0;
+	_lastDirection = EDirection::IDLE;
+	_currentPlayer = _player1Id;
+}
+
 void 		Duel::setCubes(Sifteo::VideoBuffer *player1, unsigned int player1Id,
-							Sifteo::VideoBuffer *player2, unsigned int player2Id,
-							Player *p1, Player *p2)
+						   Sifteo::VideoBuffer *player2, unsigned int player2Id,
+						   Player *p1, Player *p2)
 {
 	_player1Id = player1Id;
 	_player2Id = player2Id;
@@ -42,7 +57,6 @@ void 		Duel::setCubes(Sifteo::VideoBuffer *player1, unsigned int player1Id,
 	_p1 = p1;
 	_p2 = p2;
 	_currentNbr = 0;
-	_currentPlayer = _player1Id;
 	LOG("Current player: %d\n", _currentPlayer);
 }
 
@@ -109,13 +123,37 @@ void 		Duel::printLastDirection()
 
 void 		Duel::update(float deltaTime)
 {
-	if (_changePlayer) // is changing player
+	if (_enteringMode) // just entered the duel mode
+	{
+		_player1->sprites[0].move(32, 32);
+		_player1->sprites[0].setImage(Perdre, 3);
+		_player2->sprites[0].move(32, 32);
+		_player2->sprites[0].setImage(Perdre, 3);
+		_timer += deltaTime;
+		if (_timer > BEGIN_DUEL_TIME)
+		{
+			_player1->sprites[0].setImage(Perdre, 0);
+			_player2->sprites[0].setImage(Empty, 0);
+			_timer = 0;
+			_enteringMode = false;
+		}
+	}
+	else if (_changePlayer) // is changing player
 	{
 		_timer += deltaTime;
-		if (_currentPlayer == _player1Id)
-			_player2->sprites[0].setImage(Perdre, 0);
-		else
-			_player1->sprites[0].setImage(Perdre, 0);
+		if (_timer > DRAW_LAST_TIME)
+		{
+			if (_currentPlayer == _player1Id)
+			{
+				_player2->sprites[0].move(32, 32);
+				_player2->sprites[0].setImage(Perdre, 0);
+			}
+			else
+			{
+				_player1->sprites[0].move(32, 32);
+				_player1->sprites[0].setImage(Perdre, 0);
+			}
+		}
 		if (_timer > CHANGE_PLAYER_TIME)
 		{
 			if (_currentPlayer == _player1Id)
@@ -129,7 +167,7 @@ void 		Duel::update(float deltaTime)
 			_changePlayer = false;
 		}
 	}
-	if (_winner != -1)
+	else if (_winner != -1) // a player has won
 	{
 		_timer += deltaTime;
 		if (_timer > WON_TIME)
@@ -138,16 +176,7 @@ void 		Duel::update(float deltaTime)
 			_winner = -1;
 			_player1->sprites[0].setImage(Empty, 0);
 			_player2->sprites[0].setImage(Empty, 0);
-		}
-	}
-	if (_followActivated != NULL)
-	{
-		_followTimer += deltaTime;
-		if (_followTimer > FOLLOW_TIME)
-		{
-			_followTimer = 0;
-			_followActivated->shining = false;
-			_followActivated = NULL;
+			*_gameMode = SaveKittens::FINDKITTEN;
 		}
 	}
 }
@@ -157,7 +186,7 @@ void 		Duel::registerDirection(unsigned int cubeId)
 	EDirection::EDirection	curDir;
 	Sifteo::VideoBuffer 	*buff;
 
-	if (_winner != -1 || _currentPlayer != cubeId || _changePlayer == true)
+	if (_winner != -1 || _currentPlayer != cubeId || _changePlayer == true || _enteringMode)
 		return ;
 	if (_currentPlayer == _player1Id)
 		buff = _player1;
@@ -185,8 +214,10 @@ void 		Duel::registerDirection(unsigned int cubeId)
 	else if (_recorded[_currentNbr] != _lastDirection) // the player failed to find the right side
 	{
 		_winner = (_currentPlayer == _player1Id) ? (_player2Id) : (_player1Id);
-		_followActivated = (_currentPlayer == _player1Id) ? _p1 : _p2;
-		_followActivated->shining = true;
+		if (_winner == _player1Id)
+			_p1->shining = true;
+		else
+			_p2->shining = true;
 		++_currentNbr;
 	}
 	else // the player succeed

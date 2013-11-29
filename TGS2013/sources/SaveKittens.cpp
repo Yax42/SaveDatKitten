@@ -1,4 +1,3 @@
-
 #include "SaveKittens.hh"
 #include "assets.gen.h"
 
@@ -7,10 +6,13 @@
 
 SaveKittens::SaveKittens() :
 	_player(gRandom.random() * MAP_SIZE, gRandom.random() * MAP_SIZE, _cubes, 0),
-	_player2(gRandom.random() * MAP_SIZE, gRandom.random() * MAP_SIZE, _cubes + 1, 1)
+	_player2(gRandom.random() * MAP_SIZE, gRandom.random() * MAP_SIZE, _cubes + 1, 1),
+	_mode(EXPLORATION),
+	_duel(&_mode)
 {
 	_winner = NULL;
 	_map.genMap();
+	_timer = 0;
 }
 
 void SaveKittens::init()
@@ -21,8 +23,6 @@ void SaveKittens::init()
 		_cubes[i].attach(i);
 		_cubes[i].bg0.image(Sifteo::vec(0, 0), BlackTile);
 	}
-	//_mode = DUEL;
-	_mode = EXPLORATION;
 	_duel.setCubes(_cubes, 0, _cubes + 1, 1, &_player, &_player2);
 	_player.updateChar();
 	_player2.updateChar();
@@ -30,9 +30,26 @@ void SaveKittens::init()
 	_map.printCase(_player2);
 	_player.drawer().initSort();
 	_player2.drawer().initSort();
-//	Sifteo::Events::neighborAdd.set(&SaveKittens::onNeighborAdd, this);
 	Sifteo::Events::cubeAccelChange.set(&SaveKittens::onCubeMove, this);
 	Sifteo::Events::cubeTouch.set(&SaveKittens::onCubeTouch, this);
+}
+
+void SaveKittens::reset()
+{
+	_winner = NULL;
+	_map.genMap();
+
+	_player.shining = false;
+	_player._x = gRandom.random() * MAP_SIZE;
+	_player._y = gRandom.random() * MAP_SIZE;
+	_player._xOld = -1;
+	_player._yOld = -1;
+
+	_player2.shining = false;
+	_player2._x = gRandom.random() * MAP_SIZE;
+	_player2._y = gRandom.random() * MAP_SIZE;
+	_player2._xOld = -1;
+	_player2._yOld = -1;
 }
 
 void SaveKittens::update(Sifteo::TimeDelta dt)
@@ -43,44 +60,50 @@ void SaveKittens::update(Sifteo::TimeDelta dt)
 		_player.cube().sprites[0].setImage(Perdre, (_winner == &_player) ? 1 : 2);
 		_player2.cube().sprites[0].move(32, 32);
 		_player2.cube().sprites[0].setImage(Perdre, (_winner == &_player) ? 2 : 1);
+		_timer += dt;
+		if (_timer > RESET_GAME_TIME)
+		{
+			_timer = 0;
+			reset();
+		}
 	}
-	else if (_mode == EXPLORATION)
+	else if (_mode == EXPLORATION || _mode == FINDKITTEN)
 	{
 		_player.update(dt);
 		_player2.update(dt);
 		if (_player.shining)
 			_player.follow(Paw, _kitty.character());
 		else
-			_player.follow(Shroom, _player2._char);
+			_player.follow(Flash, _player2._char);
 		if (_player2.shining)
 			_player2.follow(Paw, _kitty.character());
 		else
-			_player2.follow(Flash, _player._char);
+			_player2.follow(Shroom, _player._char);
 		_player.flush(_map);
 		_player2.flush(_map);
 		_kitty.update(dt);
-		
+		if (_player.x() == _player2.x() &&
+			_player.y() == _player2.y() &&
+			_mode != FINDKITTEN)
+		{
+			_duel.reset();
+			_mode = DUEL;
+		}
+		else if (_mode == FINDKITTEN)
+		{
+			_timer += dt;
+			if (_timer > TIME_SAVE_KITTEN)
+			{
+				_timer = 0;
+				_mode = EXPLORATION;
+				_player.shining = false;
+				_player2.shining = false;
+			}
+		}
 	}
 	else if (_mode == DUEL)
 	{
 		_duel.update(dt);
-	}
-}
-
-void SaveKittens::onNeighborAdd(unsigned firstID, unsigned firstSide, unsigned secondID, unsigned secondSide)
-{
-	return;
-
-	if (_mode == EXPLORATION)
-	{
-		_player.move();
-		_player.drawer().clean();
-		_map.printCase(_player);
-		_player.drawer().initSort();
-	}
-	else if (_mode == DUEL)
-	{
-		
 	}
 }
 
@@ -91,16 +114,13 @@ void SaveKittens::onCubeMove(unsigned value)
 
 void SaveKittens::onCubeTouch(unsigned value)
 {
-	if (_winner)
-	{
-		_winner = NULL;
-	}
-	else if (value == 0 &&
-		_player.x() / 128 == _kitty.character().x() / 128 &&
-		_player.y() / 128 == _kitty.character().y() / 128)
+	_timer = 0;
+	if (value == 0 &&
+		_player.x() == _kitty.character().x() / 128 &&
+		_player.y() == _kitty.character().y() / 128)
 		_winner = &_player;
 	else if (value == 1 &&
-		_player2.x() / 128 == _kitty.character().x() / 128 &&
-		_player2.y() / 128 == _kitty.character().y() / 128)
+		_player2.x() == _kitty.character().x() / 128 &&
+		_player2.y() == _kitty.character().y() / 128)
 		_winner = &_player2;
 }
