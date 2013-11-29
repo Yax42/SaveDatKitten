@@ -28,6 +28,7 @@ private:
 
 	Player				_player;
 	Player				_player2;
+//	SortSprites				catDrawer;
 	Kitty				_kitty;
     Sifteo::VideoBuffer _cubes[gNumCubes];
 	Map					_map;

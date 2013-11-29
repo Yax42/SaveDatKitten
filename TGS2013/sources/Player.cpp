@@ -13,7 +13,7 @@ Player::Player(int x, int y, Sifteo::VideoBuffer *mainCube, int id) :
 	_xOld(-1),
 	_yOld(-1),
 	_mainCube(mainCube),
-	_char((id == 0) ? Toad : Pikachu, x * Sifteo::LCD_width, y * Sifteo::LCD_height, 150),
+	_char((id == 0) ? Toad : Pikachu, x * Sifteo::LCD_width + 64, y * Sifteo::LCD_height + 64, 150),
 	shining(false)
 {
     clampPosition();
