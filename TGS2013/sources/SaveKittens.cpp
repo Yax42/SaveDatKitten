@@ -40,14 +40,14 @@ void SaveKittens::reset()
 	_map.genMap();
 
 	_player.shining = false;
-	_player._x = gRandom.random() * MAP_SIZE;
-	_player._y = gRandom.random() * MAP_SIZE;
+	_player._char._pos.x = gRandom.random() * MAP_SIZE * 128 + 64;
+	_player._char._pos.y = gRandom.random() * MAP_SIZE * 128 + 64;
 	_player._xOld = -1;
 	_player._yOld = -1;
 
 	_player2.shining = false;
-	_player2._x = gRandom.random() * MAP_SIZE;
-	_player2._y = gRandom.random() * MAP_SIZE;
+	_player2._char._pos.x = gRandom.random() * MAP_SIZE * 128 + 64;
+	_player2._char._pos.y = gRandom.random() * MAP_SIZE * 128 + 64;
 	_player2._xOld = -1;
 	_player2._yOld = -1;
 }

@@ -9,7 +9,7 @@
 #define MAX2(x, y) 		(x > y) ? (x) : (y)
 
 #define	ORIENTTHRESHOLD 		40
-#define CHANGE_PLAYER_TIME 		3.0f
+#define CHANGE_PLAYER_TIME 		2.0f
 #define DRAW_LAST_TIME 			CHANGE_PLAYER_TIME / 2.0f
 #define WON_TIME 				3
 #define BEGIN_DUEL_TIME			3
@@ -44,6 +44,7 @@ void 		Duel::reset()
 	_recordedNbr = 0;
 	_lastDirection = EDirection::IDLE;
 	_currentPlayer = _player1Id;
+	state = 0;
 }
 
 void 		Duel::setCubes(Sifteo::VideoBuffer *player1, unsigned int player1Id,
@@ -124,11 +125,11 @@ void 		Duel::update(float deltaTime)
 {
 	if (_enteringMode) // just entered the duel mode
 	{
+	_timer += deltaTime;
 		_player1->sprites[0].move(32, 32);
 		_player1->sprites[0].setImage(Perdre, 3);
 		_player2->sprites[0].move(32, 32);
 		_player2->sprites[0].setImage(Perdre, 3);
-		_timer += deltaTime;
 		if (_timer > BEGIN_DUEL_TIME)
 		{
 			_player1->sprites[0].setImage(Perdre, 0);
@@ -139,8 +140,8 @@ void 		Duel::update(float deltaTime)
 	}
 	else if (_changePlayer) // is changing player
 	{
-		_timer += deltaTime;
-		if (_timer > DRAW_LAST_TIME)
+	_timer += deltaTime;
+		if (_timer < DRAW_LAST_TIME)
 		{
 			if (_currentPlayer == _player1Id)
 			{
@@ -160,15 +161,14 @@ void 		Duel::update(float deltaTime)
 			else
 				_player1->sprites[0].setImage(Empty, 0);
 			_currentPlayer = (_currentPlayer == _player1Id) ? (_player2Id) : (_player1Id);
-			_player2->sprites[0].setImage(Empty, 0);
-			_player1->sprites[0].setImage(Empty, 0);
 			_timer = 0;
 			_changePlayer = false;
+			state = 0;
 		}
 	}
 	else if (_winner != -1) // a player has won
 	{
-		_timer += deltaTime;
+	_timer += deltaTime;
 		if (_timer > WON_TIME)
 		{
 			_timer = 0;
@@ -176,6 +176,16 @@ void 		Duel::update(float deltaTime)
 			_player1->sprites[0].setImage(Empty, 0);
 			_player2->sprites[0].setImage(Empty, 0);
 			*_gameMode = SaveKittens::FINDKITTEN;
+		}
+	}
+	else if (state)
+	{
+		_timer += deltaTime;
+		if (_timer > 0.5f)
+		{
+			_lastDirection = EDirection::IDLE;
+			_timer = 0;
+			state = (state + 1) % 3;
 		}
 	}
 }
@@ -192,6 +202,13 @@ void 		Duel::registerDirection(unsigned int cubeId)
 	else if (_currentPlayer == _player2Id)
 		buff = _player2;
 	curDir = getCubeOrientation(buff);
+	if (state == 1)
+		return;
+	else if (state == 2)
+	{
+		_lastDirection = EDirection::IDLE;
+		return;
+	}
 	if (curDir == EDirection::IDLE)
 	{
 		_lastDirection = curDir;
@@ -203,6 +220,7 @@ void 		Duel::registerDirection(unsigned int cubeId)
 		return;
 	_lastDirection = curDir;
 	printLastDirection();
+	state = 1;
 	if (_recordedNbr == _currentNbr) // The player register a new side
 	{
 		_recorded[_recordedNbr] = _lastDirection;

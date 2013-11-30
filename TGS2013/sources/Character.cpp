@@ -21,8 +21,10 @@ Character::Character(const Sifteo::PinnedAssetImage & image, int x, int y, float
 void					Character::update(float delta)
 {
 	Sifteo::Float2		dir;
-	if (_dir.x == 0 && _dir.y == 0)
+	if (_dir.x == 0 && _dir.y == 0 && _isDir)
 	{
+		dir.x = 0;
+		dir.y = 0;
 	}
 	else if (_isDir)
 	{

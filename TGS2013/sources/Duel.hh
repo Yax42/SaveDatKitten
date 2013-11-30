@@ -31,6 +31,8 @@ private:
 	int 					*_gameMode;
 
 	void 					printLastDirection();	
+
+	int						state;
 	
 public:
 	Duel(int *gameMode);
